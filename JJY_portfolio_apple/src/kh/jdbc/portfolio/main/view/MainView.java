@@ -3,6 +3,7 @@ package kh.jdbc.portfolio.main.view;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import kh.jdbc.portfolio.cart.view.CartView;
 import kh.jdbc.portfolio.main.model.service.MainService;
 import kh.jdbc.portfolio.product.vo.Product;
 
@@ -15,169 +16,577 @@ public class MainView {
 
 		int input = -1;
 
-		try {
+		do {
+			try {
 
-			System.out.println("****** 환영합니다 *****");
-			System.out.println("1. 상품보기");
-			System.out.println("2. 장바구니");
-			System.out.println("3. 주문하기");
-			System.out.println("0. 프로그램 종료");
+				System.out.println("****** 메인메뉴 *****");
+				System.out.println("1. 상품보기");
+				System.out.println("2. 장바구니");
+				System.out.println("3. 주문하기");
+				System.out.println("0. 프로그램 종료");
 
-			System.out.print("\n메뉴 선택 : ");
+				System.out.print("\n메뉴 선택 : ");
 
-			input = sc.nextInt();
-			sc.nextLine();
-			System.out.println();
+				input = sc.nextInt();
+				sc.nextLine();
+				System.out.println();
 
-			switch (input) {
-			case 1:
-				productList();
-				break;
-			case 2:
-				break;
-			case 3:
-				break;
-			case 0:
-				System.out.println("프로그램 종료");
-				break;
-			default:
-				System.out.println("메뉴에 작성된 번호만 입력해주세요.");
+				switch (input) {
+				case 1:
+					productList();
+					break;
+				case 2:
+					CartView.cartMenu();
+					break;
+				case 3:
+					break;
+				case 0:
+					System.out.println("프로그램 종료");
+					break;
+				default:
+					System.out.println("메뉴에 작성된 번호만 입력해주세요.\n");
 
+				}
+			} catch (InputMismatchException e) {
+				System.out.println("\n<<입력 형식이 올바르지 않습니다.>>\n");
+				sc.nextLine();
 			}
-		} catch (InputMismatchException e) {
-			System.out.println("\n<<입력 형식이 올바르지 않습니다.>>\n");
-			sc.nextLine();
-
-		}
+		} while (input != 0);
 
 	}
 
 	private void productList() throws Exception {
-		
-		String productType = null;
-		
-		System.out.println("***** 상품타입 *****");
-		System.out.println("1. 아이폰");
-		System.out.println("2. 아이패드");
-		System.out.println("3. 맥북");
-		System.out.println("4. 맥");
-		System.out.println("5. 애플워치");
-		System.out.println("6. 이어폰");
-		
-		System.out.print("\n상품타입 입력 : ");
-		productType = sc.next();
-		
-		System.out.println();
-		
-		switch(productType) {
-		case "아이폰": iphone(); break;
-		case "아이패드": break;
-		case "맥북": break;
-		case "맥": break;
-		case "애플워치": break;
-		case "이어폰": break;
-		default : System.out.println("\n<<잘못 입력 하셨습니다.>>\n");
-		}
-		
-		
-		
+
+		int productType = -1;
+		do {
+			System.out.println("***** 상품타입 *****");
+			System.out.println("1. 아이폰");
+			System.out.println("2. 아이패드");
+			System.out.println("3. 맥북");
+			System.out.println("4. 맥");
+			System.out.println("5. 애플워치");
+			System.out.println("6. 이어폰");
+			System.out.println("0. 메인메뉴");
+
+			System.out.print("\n상품타입 입력 : ");
+			productType = sc.nextInt();
+
+			System.out.println();
+
+			switch (productType) {
+			case 1:
+				iphone();
+				break;
+			case 2:
+				ipad();
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+			case 0: mainMenu(); System.out.println("\n<<메인메뉴로 돌아갑니다.>>\n");
+				break;
+			default:
+				System.out.println("\n<<메뉴에 작성된 상품 타입만 입력 해주세요.>>\n");
+			}
+		} while (productType != 0);
+
 	}
 
 	public void iphone() throws Exception {
-		
+
+		int input = 0;
 		String productModel = null;
 		String productMemory = null;
 		String productCorlor = null;
-		
-		System.out.println("***** 아이폰 모델 ******");
-		System.out.println("1. 아이폰14");
-		System.out.println("2. 아이폰14플러스");
-		System.out.println("3. 아이폰14프로");
-		System.out.println("4. 아이폰14프로맥스");
-		
-		System.out.print("\n모델명 입력 : ");
-		productModel = sc.next();
-		
-		if(productModel.equals("아이폰14") || productModel.equals("아이폰14플러스") || productModel.equals("아이폰14프로") || productModel.equals("아이폰14프로맥스")) {
-		}else {
-			System.out.println("다시");
-		}
-	
+
+		do {
+			System.out.println("***** 아이폰 모델 ******");
+			System.out.println("1. 아이폰14");
+			System.out.println("2. 아이폰14플러스");
+			System.out.println("3. 아이폰14프로");
+			System.out.println("4. 아이폰14프로맥스");
+			System.out.println("0. 메인메뉴");
+
+			System.out.print("\n모델명 선택 : ");
+			input = sc.nextInt();
 			
-			
-		System.out.println("***** 저장용량 *****");
-		System.out.println("1. 128G");
-		System.out.println("2. 256G");
-		System.out.println("3. 512G");
-		
-		
-		System.out.print("\n저장용량 입력 (숫자+G) : ");
-		productMemory = sc.next();
-		
-		if(productMemory.equals("128G") || productMemory.equals("256G") || productMemory.equals("512G")) {
-		}else {
-			System.out.println("다시");
-		}
-				
-		System.out.println("***** 색상 *****");
-		System.out.println("1. 블루");
-		System.out.println("2. 퍼플");
-		System.out.println("3. 미드나이트");
-		System.out.println("4. 스타라이트");
-		System.out.println("5. 레드");
-			
-			
-		System.out.print("\n색상 입력 : ");
-		productCorlor = sc.next();
-		
-		if(productCorlor.equals("블루") || productCorlor.equals("퍼플") || productCorlor.equals("미드나이트") || productCorlor.equals("스타라이트") || productCorlor.equals("레드")) {
-			
-		}else {
-			System.out.println("[메뉴에 적힌 값만 입력해주세요.]");
-		}
-		System.out.println();
-					
-			
-		
-		
+			switch(input) {
+			case 0 :  System.out.println("\n<<메인메뉴로 돌아갑니다.>>\n"); mainMenu();break;
+			}
+
+			if (input == 1) {
+				productModel = "아이폰14";
+				break;
+			} else if (input == 2) {
+				productModel = "아이폰14플러스";
+				break;
+			} else if (input == 3) {
+				productModel = "아이폰14프로";
+				break;
+			} else if (input == 4) {
+				productModel = "아이폰14프로맥스";
+				break;
+			} else {
+				System.out.println("\n<<메뉴에 나와있는 번호를 입력해주세요.>>\n");
+			}
+		} while (input != -1);
+
+		do {
+
+			System.out.println("***** 저장용량 *****");
+			System.out.println("1. 128G");
+			System.out.println("2. 256G");
+			System.out.println("3. 512G");
+
+			System.out.print("\n저장용량 선택 : ");
+			input = sc.nextInt();
+
+			if (input == 1) {
+				productMemory = "128G";
+				break;
+			} else if (input == 2) {
+				productMemory = "256G";
+				break;
+			} else if (input == 3) {
+				productMemory = "512G";
+				break;
+			} else {
+				System.out.println("\n<<메뉴에 있는 번호만 입력해주세요.>>\n");
+			}
+		} while (input != -1);
+
+		do {
+			System.out.println("***** 색상 *****");
+			System.out.println("1. 블루");
+			System.out.println("2. 퍼플");
+			System.out.println("3. 미드나이트");
+			System.out.println("4. 스타라이트");
+			System.out.println("5. 레드");
+
+			System.out.print("\n색상 선택 : ");
+			input = sc.nextInt();
+
+			if (input == 1) {
+				productCorlor = "블루";
+				break;
+			} else if (input == 2) {
+				productCorlor = "퍼플";
+				break;
+			} else if (input == 3) {
+				productCorlor = "미드나이트";
+				break;
+			} else if (input == 4) {
+				productCorlor = "스타라이트";
+				break;
+			} else if (input == 5) {
+				productCorlor = "레드";
+				break;
+			} else {
+				System.out.println("\n<<메뉴에 있는 번호만 입력해주세요.>>\n");
+			}
+		} while (input != -1);
+
 		Product product = new Product(productModel, productMemory, productCorlor);
-		
+
 		int result = service.cartIn(product);
-		
-		System.out.println();
-		if(result>0) {
+
+		if (result > 0) {
 			System.out.println("\n[입력하신 상품이 맞는지 확인해주세요.]\n");
 			System.out.printf("모델명 : %s \n저장용량 : %s \n색상 : %s \n\n", productModel, productMemory, productCorlor);
-			
-		}else {
+
+		} else {
 			System.out.println("<<상품 선택 실패>>");
 		}
-	
+
 		try {
 			System.out.println("1. 장바구니 담기");
 			System.out.println("2. 취소");
 			System.out.print("\n메뉴 선택 : ");
-			int input = sc.nextInt();
-			
-			
-			switch(input) {
-			case 1: System.out.println("\n장바구니에 담았습니다.\n메인화면으로 돌아갑니다.\n"); mainMenu();  break;
-			case 2: System.out.println("\n취소하셨습니다.\n메인화면으로 돌아갑니다.\n"); mainMenu(); break;
-			default : System.out.println("잘못 입력하셨습니다.");
-		}
-		
-		}catch(InputMismatchException e) {
+			int input1 = sc.nextInt();
+
+			System.out.println();
+
+			if (input1 == 1) {
+				System.out.println("\n<<장바구니에 담았습니다>>\n");
+			} else if (input1 == 2) {
+				System.out.println("\n<<입력하신 상품을 취소했습니다>>\n");
+			}
+
+			System.out.println("1. 장바구니");
+			System.out.println("2. 상품리스트");
+			System.out.println("0. 메인화면");
+
+			System.out.println();
+
+			System.out.print("메뉴 선택 : ");
+			int input2 = sc.nextInt();
+
+			do {
+
+				switch (input2) {
+				case 1:
+					System.out.println("\n장바구니에 담았습니다.\n메인화면으로 돌아갑니다.\n");
+					break;
+				case 2:
+					System.out.println("\n<<상품리스트로 돌아갑니다>>\n");
+					productList();
+					break;
+				case 0:
+					System.out.println("\n<<메인화면으로 돌아갑니다.>>\n");
+					mainMenu();
+					break;
+				default:
+					System.out.println("잘못 입력하셨습니다.");
+
+				}
+				System.out.println();
+
+			} while (input2 != 0);
+
+		} catch (InputMismatchException e) {
 			e.printStackTrace();
+
 		}
-		
-		
-	
-			
-		
 	}
+
+	/**
+	 * 아이패드
+	 * @throws Exception
+	 */
+	public void ipad() throws Exception {
+
+		int input = 0;
+		String productModel = null;
+		String productMemory = null;
+		String productCorlor = null;
+
+		while (true) {
+			System.out.println("***** 아이패드 모델 ******");
+			System.out.println("1. 아이패드");
+			System.out.println("2. 아이패드 미니");
+			System.out.println("3. 아이패드 에어");
+			System.out.println("4. 아이패드 프로 11");
+			System.out.println("5. 아이패드 프로 12.9");
+
+			System.out.print("\n모델명 선택 : ");
+			input = sc.nextInt();
+
+			if (input == 1) {
+				productModel = "아이패드";
+
+				do {
+					System.out.println();
+					System.out.println("***** 저장용량 *****");
+					System.out.println("1. 64G");
+					System.out.println("2. 256G");
+
+					System.out.print("\n저장용량 선택 : ");
+					input = sc.nextInt();
+
+					if (input == 1) {
+						productMemory = "64G";
+					} else if (input == 2) {
+						productMemory = "256G";
+					} else {
+						System.out.println("<<메뉴에 있는 번호만 입력해주세요.>>");
+					}
+				} while (input != -1);
+
+				do {
+					System.out.println();
+					System.out.println("***** 색상 *****");
+					System.out.println("1. 스페이스그레이");
+					System.out.println("2. 실버");
+
+					System.out.print("\n색상 선택 : ");
+					input = sc.nextInt();
+
+					if (input == 1) {
+						productCorlor = "스페이스그레이";
+					} else if (input == 2) {
+						productCorlor = "실버";
+					} else {
+						System.out.println("<<메뉴에 있는 번호만 입력해주세요.>>");
+					}
+				} while (input != -1);
+
+			} else if (input == 2) {
+				productModel = "아이패드 미니";
+
+				do {
+					System.out.println();
+					System.out.println("***** 저장용량 *****");
+					System.out.println("1. 64G");
+					System.out.println("2. 256G");
+
+					System.out.print("\n저장용량 선택 : ");
+					input = sc.nextInt();
+
+					if (input == 1) {
+						productMemory = "64G";
+						break;
+					} else if (input == 2) {
+						productMemory = "256G";
+						break;
+					} else {
+						System.out.println("<<메뉴에 있는 번호만 입력해주세요.>>");
+					}
+				} while (input != -1);
+
+				do {
+					System.out.println();
+					System.out.println("***** 색상 *****");
+					System.out.println("1. 스페이스그레이");
+					System.out.println("2. 핑크");
+					System.out.println("3. 퍼플");
+					System.out.println("4. 스타라이트");
+
+					System.out.print("\n색상 선택 : ");
+					input = sc.nextInt();
+
+					if (input == 1) {
+						productCorlor = "스페이스그레이";
+						break;
+					} else if (input == 2) {
+						productCorlor = "핑크";
+						break;
+					} else if (input == 3) {
+						productCorlor = "퍼플";
+						break;
+					} else if (input == 4) {
+						productCorlor = "스타라이트";
+						break;
+					} else {
+						System.out.println("<<메뉴에 있는 번호만 입력해주세요.>>");
+					}
+				} while (input != -1);
+
+			} else if (input == 3) {
+				productModel = "아이패드 에어";
+
+				do {
+					System.out.println();
+					System.out.println("***** 저장용량 *****");
+					System.out.println("1. 64G");
+					System.out.println("2. 256G");
+
+					System.out.print("\n저장용량 선택 : ");
+					input = sc.nextInt();
+
+					if (input == 1) {
+						productMemory = "64G";
+						break;
+					} else if (input == 2) {
+						productMemory = "256G";
+						break;
+					} else {
+						System.out.println("<<메뉴에 있는 번호만 입력해주세요.>>");
+					}
+				} while (input != -1);
+
+				do {
+					System.out.println();
+					System.out.println("***** 색상 *****");
+					System.out.println("1. 스페이스그레이");
+					System.out.println("2. 핑크");
+					System.out.println("3. 블루");
+					System.out.println("4. 퍼플");
+					System.out.println("5. 스타라이트");
+
+					System.out.print("\n색상 선택 : ");
+					input = sc.nextInt();
+
+					if (input == 1) {
+						productCorlor = "스페이스그레이";
+						break;
+					} else if (input == 2) {
+						productCorlor = "핑크";
+						break;
+					} else if (input == 3) {
+						productCorlor = "블루";
+						break;
+					} else if (input == 4) {
+						productCorlor = "퍼플";
+						break;
+					} else if (input == 5) {
+						productCorlor = "스타라이트";
+						break;
+					} else {
+						System.out.println("<<메뉴에 있는 번호만 입력해주세요.>>");
+					}
+				} while (input != -1);
+
+			} else if (input == 4) {
+				productModel = "아이패드 프로 11";
+
+				do {
+					System.out.println();
+					System.out.println("***** 저장용량 *****");
+					System.out.println("1. 128G");
+					System.out.println("2. 256G");
+					System.out.println("3. 512G");
+					System.out.println("4. 1TB");
+
+					System.out.print("\n저장용량 선택 : ");
+					input = sc.nextInt();
+
+					if (input == 1) {
+						productMemory = "128G";
+						break;
+					} else if (input == 2) {
+						productMemory = "256G";
+						break;
+					} else if (input == 3) {
+						productMemory = "512G";
+						break;
+					} else if (input == 4) {
+						productMemory = "1TB";
+						break;
+					} else {
+						System.out.println("<<메뉴에 있는 번호만 입력해주세요.>>");
+					}
+				} while (input != -1);
+
+				do {
+					System.out.println();
+					System.out.println("***** 색상 *****");
+					System.out.println("1. 스페이스그레이");
+					System.out.println("2. 실버");
+
+					System.out.print("\n색상 선택 : ");
+					input = sc.nextInt();
+
+					if (input == 1) {
+						productCorlor = "스페이스그레이";
+						break;
+					} else if (input == 2) {
+						productCorlor = "실버";
+						break;
+					} else {
+						System.out.println("<<메뉴에 있는 번호만 입력해주세요.>>");
+					}
+				} while (input != -1);
+
+			} else if (input == 5) {
+				productModel = "아이패드 프로 12.9";
+
+				do {
+					System.out.println();
+					System.out.println("***** 저장용량 *****");
+					System.out.println("1. 128G");
+					System.out.println("2. 256G");
+					System.out.println("3. 512G");
+					System.out.println("4. 1TB");
+					System.out.print("\n저장용량 선택 : ");
+					input = sc.nextInt();
+					if (input == 1) {
+						productMemory = "128G";
+						break;
+					} else if (input == 2) {
+						productMemory = "256G";
+						break;
+					} else if (input == 3) {
+						productMemory = "512G";
+						break;
+					} else if (input == 4) {
+						productMemory = "1TB";
+						break;
+					} else {
+						System.out.println("<<메뉴에 있는 번호만 입력해주세요.>>");
+					}
+				} while (input != -1);
+
+				do {
+					System.out.println();
+					System.out.println("***** 색상 *****");
+					System.out.println("1. 스페이스그레이");
+					System.out.println("2. 실버");
+
+					System.out.print("\n색상 선택 : ");
+					input = sc.nextInt();
+
+					if (input == 1) {
+						productCorlor = "스페이스그레이";
+						break;
+					} else if (input == 2) {
+						productCorlor = "실버";
+						break;
+					} else {
+						System.out.println("<<메뉴에 있는 번호만 입력해주세요.>>");
+					}
+				} while (input != -1);
+			} else {
+				System.out.println("\n<<모델명에 해당하는 번호를 입력해주세요.>>\n");
+			}
+
+			Product product = new Product(productModel, productMemory, productCorlor);
+
+			int result = service.cartIn(product);
+
+			System.out.println();
+			if (result > 0) {
+				System.out.println("\n[입력하신 상품이 맞는지 확인해주세요.]\n");
+				System.out.printf("모델명 : %s \n저장용량 : %s \n색상 : %s \n\n", productModel, productMemory, productCorlor);
+
+			} else {
+				System.out.println("<<상품 선택 실패>>");
+			}
+
+			try {
+				System.out.println("1. 장바구니 담기");
+				System.out.println("2. 취소");
+				System.out.print("\n메뉴 선택 : ");
+				int input1 = sc.nextInt();
+
+				System.out.println();
+
+				if (input1 == 1) {
+					System.out.println("\n<<장바구니에 담았습니다>>\n");
+				} else if (input1 == 2) {
+					System.out.println("\n<<입력하신 상품을 취소했습니다>>\n");
+				}
+
+				System.out.println("1. 장바구니");
+				System.out.println("2. 상품리스트");
+				System.out.println("0. 메인화면");
+
+				System.out.println();
+
+				System.out.print("메뉴 선택 : ");
+				int input2 = sc.nextInt();
+
+				do {
+
+					switch (input2) {
+					case 1:
+						System.out.println("\n장바구니에 담았습니다.\n메인화면으로 돌아갑니다.\n");
+						break;
+					case 2:
+						System.out.println("\n<<상품리스트로 돌아갑니다>>\n");
+						productList();
+						break;
+					case 0:
+						System.out.println("\n<<메인화면으로 돌아갑니다.>>\n");
+						mainMenu();
+						break;
+					default:
+						System.out.println("잘못 입력하셨습니다.");
+
+					}
+					System.out.println();
+
+				} while (input2 != 0);
+
+			} catch (InputMismatchException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
 }
-		
-		
-		
-		
-		

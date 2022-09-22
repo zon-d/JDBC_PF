@@ -1,38 +1,32 @@
-package kh.jdbc.portfolio.product.vo;
+package kh.jdbc.portfolio.cart.model.vo;
 
-public class Product {
+import java.util.List;
+
+public class Cart {
+	public Cart() {}
 	
-	private String productType;
+	private int cartInNo;
 	private String productModel;
 	private String productMemory;
 	private String productCorlor;
-	private String productPrice;
-	private String appleCare;
 	
-	private void Product() {}
+	private List<Cart> cartList;
 
-	
-
-	public Product(String productModel, String productMemory, String productCorlor) {
+	public Cart(int cartInNo, String productModel, String productMemory, String productCorlor, List<Cart> cartList) {
 		super();
+		this.cartInNo = cartInNo;
 		this.productModel = productModel;
 		this.productMemory = productMemory;
 		this.productCorlor = productCorlor;
+		this.cartList = cartList;
 	}
 
-
-
-	
-
-	public Product(String productModel) {
-		super();
-		this.productModel = productModel;
+	public int getCartInNo() {
+		return cartInNo;
 	}
 
-
-
-	public void setProductType(String productType) {
-		this.productType = productType;
+	public void setCartInNo(int cartInNo) {
+		this.cartInNo = cartInNo;
 	}
 
 	public String getProductModel() {
@@ -59,21 +53,14 @@ public class Product {
 		this.productCorlor = productCorlor;
 	}
 
-	public String getProductPrice() {
-		return productPrice;
+	public List<Cart> getCartList() {
+		return cartList;
 	}
 
-	public void setProductPrice(String productPrice) {
-		this.productPrice = productPrice;
+	public void setCartList(List<Cart> cartList) {
+		this.cartList = cartList;
 	}
-
-	public String getAppleCare() {
-		return appleCare;
-	}
-
-	public void setAppleCare(String appleCare) {
-		this.appleCare = appleCare;
-	}
+	
 	
 	
 
