@@ -88,7 +88,9 @@ public class MainView {
 				break;
 			case 6:
 				break;
-			case 0: mainMenu(); System.out.println("\n<<메인메뉴로 돌아갑니다.>>\n");
+			case 0:
+				mainMenu();
+				System.out.println("\n<<메인메뉴로 돌아갑니다.>>\n");
 				break;
 			default:
 				System.out.println("\n<<메뉴에 작성된 상품 타입만 입력 해주세요.>>\n");
@@ -114,9 +116,12 @@ public class MainView {
 
 			System.out.print("\n모델명 선택 : ");
 			input = sc.nextInt();
-			
-			switch(input) {
-			case 0 :  System.out.println("\n<<메인메뉴로 돌아갑니다.>>\n"); mainMenu();break;
+
+			switch (input) {
+			case 0:
+				System.out.println("\n<<메인메뉴로 돌아갑니다.>>\n");
+				mainMenu();
+				break;
 			}
 
 			if (input == 1) {
@@ -256,6 +261,7 @@ public class MainView {
 
 	/**
 	 * 아이패드
+	 * 
 	 * @throws Exception
 	 */
 	public void ipad() throws Exception {

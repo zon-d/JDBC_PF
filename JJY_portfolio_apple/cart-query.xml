@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>cart-query.xml file</comment>
+	
+	<!-- 장바구니 목록 -->
+	<entry key="viewCartList">
+		SELECT * FROM CART
+	</entry>
+	
+	<!-- 장바구니 상품 금액 합계 -->
+	<entry key="cartInSum">
+		SELECT SUM(PRODUCT_PRICE)
+		FROM CART
+	</entry>
+	
+	
+</properties>

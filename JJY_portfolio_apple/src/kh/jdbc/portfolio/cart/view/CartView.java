@@ -10,11 +10,11 @@ import kh.jdbc.portfolio.main.view.MainView;
 
 public class CartView {
 
-
-	private CartService cService = new CartService();
+	private static CartService cService = new CartService();
 
 	/**
 	 * 장바구니
+	 * 
 	 * @throws Exception
 	 */
 	public static void cartMenu() throws Exception {
@@ -37,7 +37,8 @@ public class CartView {
 				sc.nextLine();
 
 				switch (input) {
-				case 1: 
+				case 1:
+					cartList();
 					break;
 				case 2:
 					break;
@@ -59,29 +60,40 @@ public class CartView {
 		} while (input != 0);
 
 	}
-	
-	public void cartView() {
+
+	public static void cartList() {
 		System.out.println("\n[장바구니 조회]\n");
-		
+
 		try {
-			List<Cart> cartList = cService.viewCart();
-			
-			if(cartList.isEmpty()) {
+			List<Cart> cartList = cService.cartList();
+
+			if (cartList.isEmpty()) {
 				System.out.println("장바구니에 상품이 없습니다.");
-			}else {
-				for(Cart c : cartList) {
-					
+			} else {
+				for (Cart c : cartList) {
+
 					// 번호, 모델명, 색상, 용량, 가격
-					System.out.printf("%d | %s | %s | %s | %d\n");
-						c.getCartInNo(), c.getProductModel(), c.getProductCorlor(),
-						c.getProductMemory(), 
+					System.out.printf("No. %d | %s | %s | %s \n상품 가격 : %d원\n\n", c.getCartInNo(), c.getProductModel(),
+							c.getProductCorlor(), c.getProductMemory(), c.getProductPrice());
+
+				}
+				
+				try {
+					int cartInSum = cService.cartInSum();
+					
+					System.out.printf("합계 : %d", );
+					
+				}catch(Exception e) {
+					e.printStackTrace();
 					
 				}
 			}
-			
-			
+
+		} catch (Exception e) {
+			System.out.println("\n<<게시글 목록 조회 중 예외 발생>>\n");
+			e.printStackTrace();
 		}
-		
+
 	}
 
 }

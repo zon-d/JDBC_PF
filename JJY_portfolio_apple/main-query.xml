@@ -4,9 +4,18 @@
 	<comment>main-query.xml file</comment>
 	
 	<!-- 장바구니 -->
-	<entry key="cart">
-		INSERT INTO CART
-		VALUES (?, ?, ?)
+	<entry key="cartIn">
+		INSERT INTO "CART"
+		VALUES (SEQ_CARTIN_NO.NEXTVAL, ?, ?, ?, NULL)
 	</entry>
 	
+	<!-- 장바구니 가격 업데이트 -->
+	<entry key="cartPrice">
+		UPDATE CART C
+		SET C.PRODUCT_PRICE = (SELECT PRODUCT_PRICE
+								FROM PRODUCT P
+								WHERE C.PRODUCT_MODEL = P.PRODUCT_MODEL
+								AND C.PRODUCT_MEMORY = P.PRODUCT_MEMORY)
+	</entry>							
+								
 </properties>

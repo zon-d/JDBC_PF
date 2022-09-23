@@ -1,17 +1,15 @@
 package kh.jdbc.portfolio.product.vo;
 
 public class Product {
-	
+
 	private String productType;
 	private String productModel;
 	private String productMemory;
 	private String productCorlor;
 	private String productPrice;
-	private String appleCare;
-	
-	private void Product() {}
 
-	
+	private void Product() {
+	}
 
 	public Product(String productModel, String productMemory, String productCorlor) {
 		super();
@@ -20,16 +18,10 @@ public class Product {
 		this.productCorlor = productCorlor;
 	}
 
-
-
-	
-
 	public Product(String productModel) {
 		super();
 		this.productModel = productModel;
 	}
-
-
 
 	public void setProductType(String productType) {
 		this.productType = productType;
@@ -66,15 +58,5 @@ public class Product {
 	public void setProductPrice(String productPrice) {
 		this.productPrice = productPrice;
 	}
-
-	public String getAppleCare() {
-		return appleCare;
-	}
-
-	public void setAppleCare(String appleCare) {
-		this.appleCare = appleCare;
-	}
-	
-	
 
 }
