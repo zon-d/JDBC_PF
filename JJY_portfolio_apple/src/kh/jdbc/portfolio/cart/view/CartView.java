@@ -1,5 +1,6 @@
 package kh.jdbc.portfolio.cart.view;
 
+import java.util.Formatter;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -11,57 +12,89 @@ import kh.jdbc.portfolio.main.view.MainView;
 public class CartView {
 
 	private static CartService cService = new CartService();
+	private static Cart cart = new Cart();
+	Scanner sc = new Scanner(System.in);
 
 	/**
 	 * 장바구니
 	 * 
 	 * @throws Exception
 	 */
-	public static void cartMenu() throws Exception {
+	public void cartMenu() throws Exception {
 
 		Scanner sc = new Scanner(System.in);
 		int input = -1;
 
-		do {
-			try {
-				System.out.println("***** 장바구니 *****");
-				System.out.println("1. 장바구니 조회");
-				System.out.println("2. 장바구니 상품 삭제");
-				System.out.println("3. 장바구니 전체 삭제");
-				System.out.println("4. 장바구니 전체 주문");
-				System.out.println("0. 메인메뉴");
+		try {
 
-				System.out.print("\n메뉴 선택 : ");
+			List<Cart> cartList = cService.cartList();
+			do {
 
-				input = sc.nextInt();
-				sc.nextLine();
+				if (cartList.isEmpty()) {
+					System.out.println("장바구니에 상품이 없습니다.\n");
+					break;
+					
+				} else {
+					for (Cart c : cartList) {
 
-				switch (input) {
-				case 1:
-					cartList();
-					break;
-				case 2:
-					break;
-				case 3:
-					break;
-				case 4:
-					break;
-				case 0:
-					System.out.println("\n<<메인메뉴로 돌아갑니다.>>\n");
-					break;
-				default:
-					System.out.println("메뉴에 작성된 번호를 입력해주세요.");
+						System.out.printf("장바구니에 %d 개의 상품이 있습니다.\n\n", cService.cart());
+						break;
+
+					}
+					do {
+
+						System.out.println("***** 장바구니 *****");
+						System.out.println("1. 장바구니 상세 조회");
+						System.out.println("2. 장바구니 선택 주문");
+						System.out.println("3. 장바구니 전체 주문");
+						System.out.println("4. 장바구니 선택 삭제");
+						System.out.println("5. 장바구니 전체 삭제");
+						System.out.println("0. 메인메뉴");
+
+						System.out.print("\n메뉴 선택 : ");
+
+						input = sc.nextInt();
+						sc.nextLine();
+
+						switch (input) {
+						case 1:
+							cartList();
+							break;
+						case 2:
+
+							break;
+						case 3:
+
+							break;
+						case 4:
+							deleteCart();
+							break;
+						case 5:
+							deleteAll();
+							break;
+						case 0:
+							MainView.mainMenu();
+							System.out.println("\n<<메인메뉴로 돌아갑니다.>>\n");
+							break;
+						default:
+							System.out.println("메뉴에 작성된 번호를 입력해주세요.");
+
+						}
+					} while (input != 0);
 
 				}
-			} catch (InputMismatchException e) {
-				e.printStackTrace();
-			}
+			} while (cartList != null);
 
-		} while (input != 0);
+		} catch (InputMismatchException e) {
+			e.printStackTrace();
+		}
 
 	}
 
-	public static void cartList() {
+	/**
+	 * 장바구니 상세 조회
+	 */
+	public void cartList() {
 		System.out.println("\n[장바구니 조회]\n");
 
 		try {
@@ -77,20 +110,95 @@ public class CartView {
 							c.getProductCorlor(), c.getProductMemory(), c.getProductPrice());
 
 				}
-				
-				try {
-					int cartInSum = cService.cartInSum();
-					
-					System.out.printf("합계 : %d", );
-					
-				}catch(Exception e) {
-					e.printStackTrace();
-					
-				}
+				System.out.printf("상품 가격 합계 : %d 원\n\n", cService.priceSum());
 			}
 
 		} catch (Exception e) {
 			System.out.println("\n<<게시글 목록 조회 중 예외 발생>>\n");
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * 장바구니 선택 삭제
+	 */
+	public void deleteCart() {
+
+		try {
+
+			Scanner sc = new Scanner(System.in);
+			List<Cart> cartList = cService.cartList();
+
+			for (Cart c : cartList) {
+
+				System.out.println("\n[상품 삭제]\n");
+				System.out.print("삭제할 상품 번호 입력 : ");
+				int cartInNo = sc.nextInt();
+				sc.nextLine();
+
+				if (c.getCartInNo() == cartInNo) { // 상품 번호 일치
+
+					System.out.print("정말 삭제 하시겠습니까? (Y/N) : ");
+					char ch = sc.next().toUpperCase().charAt(0);
+
+					if (ch == 'Y') {
+						int result = cService.deleteCart(cartInNo);
+
+						if (result > 0) {
+							System.out.println("\n[상품 삭제 성공]\n");
+						} else {
+							System.out.println("\n[상품 삭제 실패...]\n");
+						}
+
+					} else {
+						System.out.println("\n[취소 되었습니다.]\n");
+					}
+
+				} else {
+					System.out.println("\n[장바구니에 있는 상품만 삭제할 수 있습니다.]\n");
+				}
+
+				break; // 더 이상의 검사 불필요
+			}
+
+		} catch (Exception e) {
+			System.out.println("\n<<상품 삭제 중 예외 발생>>\n");
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 장바구니 전체 삭제
+	 */
+	public void deleteAll() {
+
+		try {
+			Scanner sc = new Scanner(System.in);
+
+			List<Cart> cartList = cService.cartList();
+
+			if (cartList.isEmpty()) {
+				System.out.println("장바구니가 비어있습니다.");
+			} else {
+
+				System.out.println("장바구니 삭제를 하시겠습니까?(Y/N) : ");
+				char ch = sc.next().toUpperCase().charAt(0);
+
+				if (ch == 'Y') {
+					int result = cService.deleteAllCart();
+
+					if (result > 0) {
+						System.out.println("\n[상품 삭제 성공]\n");
+					} else {
+						System.out.println("\n[상품 삭제 실패...]\n");
+					}
+
+				}
+			}
+
+		} catch (Exception e) {
+			System.out.println("\n<<장바구니 삭제 중 예외 발생>>\n");
 			e.printStackTrace();
 		}
 

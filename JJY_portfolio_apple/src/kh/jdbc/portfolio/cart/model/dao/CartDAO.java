@@ -6,18 +6,21 @@ import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 import kh.jdbc.portfolio.cart.model.vo.Cart;
+import kh.jdbc.portfolio.cart.view.CartView;
 
 public class CartDAO {
 
 	private Statement stmt;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
+	Cart cart = new Cart();
 
 	private Properties prop;
 
@@ -65,20 +68,6 @@ public class CartDAO {
 				cart.setProductPrice(productPrice);
 
 				cartList.add(cart);
-
-				try {
-
-					String price = prop.getProperty("allCartInPrice");
-
-					stmt = conn.createStatement();
-
-					rs = stmt.executeQuery(price);
-
-				} finally {
-					close(rs);
-					close(stmt);
-				}
-
 			}
 
 		} finally {
@@ -91,22 +80,27 @@ public class CartDAO {
 	}
 
 	/**
-	 * 장바구니 상품 합계 DAO
+	 * 장바구니 상품 금액 합계
 	 * 
 	 * @param conn
-	 * @return
+	 * @param cartList
+	 * @return priceSum
 	 * @throws Exception
 	 */
-	public int cartInSum(Connection conn) throws Exception {
+	public int priceSum(Connection conn) throws Exception {
 
-		int cartInSum = 0;
+		int priceSum = 0;
 
 		try {
-			String sql = prop.getProperty("cartInSum");
+			String sql = prop.getProperty("priceSum");
 
 			stmt = conn.createStatement();
 
 			rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				priceSum = rs.getInt(1);
+			}
 
 		} finally {
 			close(rs);
@@ -114,26 +108,118 @@ public class CartDAO {
 
 		}
 
-		return cartInSum;
+		return priceSum;
 	}
 
-	/**
-	 * 장바구니 목록 조회 서비스
-	 * 
-	 * @return cartList
-	 * @throws Exception
-	 */
-//	public List<Cart> viewCartList() throws Exception{
+//	/**
+//	 * 장바구니 상품 삭제 DAO
+//	 * 
+//	 * @param conn
+//	 * @param cart
+//	 * @return
+//	 * @throws Exception
+//	 */
+//	public int deleteCart(Connection conn, Cart cart) throws Exception {
 //
+//		int cartInNo = 0;
 //
-//		List<Cart> cartList = new ArrayList<>();
-//		
 //		try {
-//			String sql = prop.getProperty("cartList");
+//			String sql = prop.getProperty("deleteCart");
+//
+//			pstmt = conn.prepareStatement(sql);
+//
+//			pstmt.setInt(1, cartInNo);
+//
+//			cartInNo = pstmt.executeUpdate();
+//
+//		} finally {
+//			close(rs);
+//			close(pstmt);
+//
 //		}
-//		
-//		return null;
+//		return cartInNo;
 //	}
-//	
+
+//	public int deleteCart(Connection conn) throws Exception {
+//
+//		int result = 0;
+//
+//		try {
+//			String sql = prop.getProperty("deleteCart");
+//
+//			pstmt = conn.prepareStatement(sql);
+//
+//			pstmt.setInt(1, cart.getCartInNo());
+//
+//			rs = pstmt.executeUpdate();
+//
+//		} finally {
+//			close(pstmt);
+//			close(rs);
+//		}
+//
+//		return result;
+//
+//	}
+
+	public int deleteCart(Connection conn, int cartInNo) throws Exception {
+		int result = 0;
+
+		try {
+			String sql = prop.getProperty("deleteCart");
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, cartInNo);
+
+			result = pstmt.executeUpdate();
+
+		} finally {
+			close(pstmt);
+
+		}
+
+		return result;
+	}
+
+	public int cart(Connection conn) throws Exception {
+
+		int result = 0;
+
+		try {
+			String sql = prop.getProperty("cart");
+
+			stmt = conn.createStatement();
+
+			rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+
+		} finally {
+			close(stmt);
+		}
+		return result;
+	}
+
+	public int deleteAllCart(Connection conn) throws Exception {
+
+		int result = 0;
+
+		try {
+			String sql = prop.getProperty("deleteAllCart");
+
+			pstmt = conn.prepareStatement(sql);
+
+			result = pstmt.executeUpdate();
+
+		} finally {
+			close(pstmt);
+
+		}
+
+		return result;
+	}
 
 }

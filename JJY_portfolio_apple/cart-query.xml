@@ -3,15 +3,32 @@
 <properties>
 	<comment>cart-query.xml file</comment>
 	
+	<!-- 장바구니 상품 개수 -->
+	<entry key = "cart">
+		SELECT COUNT(*) FROM CART
+	</entry>
+	
+	
 	<!-- 장바구니 목록 -->
 	<entry key="viewCartList">
 		SELECT * FROM CART
 	</entry>
 	
 	<!-- 장바구니 상품 금액 합계 -->
-	<entry key="cartInSum">
+	<entry key="priceSum">
 		SELECT SUM(PRODUCT_PRICE)
 		FROM CART
+	</entry>
+	
+	
+	<!-- 장바구니 상품 삭제 -->
+	<entry key="deleteCart">
+		DELETE FROM CART WHERE CARTIN_NO = ?
+	</entry>
+	
+	<!-- 장바구니 전체 삭제 -->
+	<entry key="deleteAllCart">
+		DELETE FROM CART
 	</entry>
 	
 	

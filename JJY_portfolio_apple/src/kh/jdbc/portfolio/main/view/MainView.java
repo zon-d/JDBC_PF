@@ -1,14 +1,22 @@
 package kh.jdbc.portfolio.main.view;
 
+import kh.jdbc.portfolio.*;
+
 import java.util.InputMismatchException;
+
+import java.util.List;
 import java.util.Scanner;
 
+import kh.jdbc.portfolio.cart.model.service.CartService;
+import kh.jdbc.portfolio.cart.model.vo.Cart;
 import kh.jdbc.portfolio.cart.view.CartView;
 import kh.jdbc.portfolio.main.model.service.MainService;
 import kh.jdbc.portfolio.product.vo.Product;
 
 public class MainView {
 	Scanner sc = new Scanner(System.in);
+	public CartService cService = new CartService();
+	public CartView cartView = new CartView();
 
 	MainService service = new MainService();
 
@@ -22,7 +30,7 @@ public class MainView {
 				System.out.println("****** 메인메뉴 *****");
 				System.out.println("1. 상품보기");
 				System.out.println("2. 장바구니");
-				System.out.println("3. 주문하기");
+				System.out.println("3. 주문배송");
 				System.out.println("0. 프로그램 종료");
 
 				System.out.print("\n메뉴 선택 : ");
@@ -36,7 +44,7 @@ public class MainView {
 					productList();
 					break;
 				case 2:
-					CartView.cartMenu();
+					cartView.cartMenu();
 					break;
 				case 3:
 					break;
@@ -557,8 +565,8 @@ public class MainView {
 					System.out.println("\n<<입력하신 상품을 취소했습니다>>\n");
 				}
 
-				System.out.println("1. 장바구니");
-				System.out.println("2. 상품리스트");
+				System.out.println("1. 계속 담기");
+				System.out.println("2. 장바구니");
 				System.out.println("0. 메인화면");
 
 				System.out.println();
@@ -570,11 +578,12 @@ public class MainView {
 
 					switch (input2) {
 					case 1:
-						System.out.println("\n장바구니에 담았습니다.\n메인화면으로 돌아갑니다.\n");
-						break;
-					case 2:
 						System.out.println("\n<<상품리스트로 돌아갑니다>>\n");
 						productList();
+						break;
+					case 2:
+						cartView.cartList();
+						System.out.println("\n[장바구니 확인]\n");
 						break;
 					case 0:
 						System.out.println("\n<<메인화면으로 돌아갑니다.>>\n");
