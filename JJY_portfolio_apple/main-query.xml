@@ -5,8 +5,20 @@
 	
 	<!-- 장바구니 -->
 	<entry key="cartIn">
-		INSERT INTO "CART"
-		VALUES (SEQ_CARTIN_NO.NEXTVAL, ?, ?, ?, NULL)
+		INSERT INTO CART (USER_NO, CARTIN_NO, PRODUCT_MODEL, PRODUCT_MEMORY, PRODUCT_CORLOR)
+		VALUES (?, SEQ_CARTIN_NO.NEXTVAL, ?, ?, ?)
+	</entry>
+	
+	<!-- 장바구니2 -->
+	<entry key="cartIn2">
+		INSERT INTO CART (USER_NO, CARTIN_NO, PRODUCT_MODEL)
+		VALUES (?, SEQ_CARTIN_NO.NEXTVAL, ?)
+	</entry>
+	
+	<!-- 장바구니3 -->
+	<entry key="cartIn3">
+		INSERT INTO CART (USER_NO, CARTIN_NO, PRODUCT_MODEL, PRODUCT_CORLOR)
+		VALUES (?, SEQ_CARTIN_NO.NEXTVAL, ?, ?)
 	</entry>
 	
 	<!-- 장바구니 가격 업데이트 -->
@@ -16,6 +28,14 @@
 								FROM PRODUCT P
 								WHERE C.PRODUCT_MODEL = P.PRODUCT_MODEL
 								AND C.PRODUCT_MEMORY = P.PRODUCT_MEMORY)
+	</entry>					
+			
+	<!-- 장바구니 가격 업데이트2 -->
+	<entry key="cartPrice2">
+		UPDATE CART C
+		SET C.PRODUCT_PRICE = (SELECT PRODUCT_PRICE
+								FROM PRODUCT P
+								WHERE C.PRODUCT_MODEL = P.PRODUCT_MODEL)
 	</entry>							
 								
 </properties>

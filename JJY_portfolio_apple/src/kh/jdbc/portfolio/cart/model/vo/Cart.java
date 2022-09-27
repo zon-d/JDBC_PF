@@ -12,6 +12,15 @@ public class Cart {
 	private String productCorlor;
 	private int productPrice;
 	private int priceSum;
+	private int userNo;
+
+	public int getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
+	}
 
 	private List<Cart> cartList;
 
@@ -20,7 +29,7 @@ public class Cart {
 	}
 
 	public Cart(int cartInNo, String productModel, String productMemory, String productCorlor, int productPrice,
-			int priceSum, List<Cart> cartList) {
+			int priceSum, int userNo, List<Cart> cartList) {
 		super();
 		this.cartInNo = cartInNo;
 		this.productModel = productModel;
@@ -28,6 +37,7 @@ public class Cart {
 		this.productCorlor = productCorlor;
 		this.productPrice = productPrice;
 		this.priceSum = priceSum;
+		this.userNo = userNo;
 		this.cartList = cartList;
 	}
 
@@ -53,6 +63,11 @@ public class Cart {
 
 	public int getProductPrice() {
 		return productPrice;
+	}
+
+	public Cart(String productModel) {
+		super();
+		this.productModel = productModel;
 	}
 
 	public void setProductPrice(int productPrice) {

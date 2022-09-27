@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>member_query.xml file</comment>
+
+	<!-- 사용자 정보 중복 검사-->
+	<entry key="userDupCheck">
+		SELECT COUNT(*) FROM "USER"
+		WHERE USER_NM = ?
+		AND USER_PH = ?
+	</entry>
+	
+	<!-- 사용자 정보 등록 -->
+	<entry key="insertUser">
+		INSERT INTO "USER" (USER_NO, USER_NM, USER_PH)
+		VALUES (SEQ_USER_NO.NEXTVAL, ?, ?)
+	</entry>
+	
+	<!-- 사용자 정보 조회 -->
+	<entry key = "login">
+		SELECT USER_NO, USER_NM, USER_PH, CART, "ORDER"
+		FROM "USER"
+		WHERE USER_NM = ?
+		AND USER_PH = ?
+	</entry>
+	
+</properties>

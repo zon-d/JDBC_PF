@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,15 +13,19 @@ import java.util.Properties;
 
 import kh.jdbc.portfolio.cart.model.vo.Cart;
 import kh.jdbc.portfolio.cart.view.CartView;
+import kh.jdbc.portfolio.member.vo.User;
 
 public class CartDAO {
 
-	private Statement stmt;
-	private PreparedStatement pstmt;
-	private ResultSet rs;
+	private Statement stmt = null;
+	private PreparedStatement pstmt = null;
+	private ResultSet rs = null;
 	Cart cart = new Cart();
+	User user = new User();
 
-	private Properties prop;
+	public User insertUser = null;
+
+	private Properties prop = null;
 
 	public CartDAO() {
 		try {
@@ -53,7 +56,8 @@ public class CartDAO {
 			rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
-
+				
+				int userNo = rs.getInt("USER_NO");
 				int cartInNo = rs.getInt("CARTIN_NO");
 				String productModel = rs.getString("PRODUCT_MODEL");
 				String productMemory = rs.getString("PRODUCT_MEMORY");
@@ -61,6 +65,8 @@ public class CartDAO {
 				int productPrice = rs.getInt("PRODUCT_PRICE");
 
 				Cart cart = new Cart();
+
+				cart.setUserNo(userNo);
 				cart.setCartInNo(cartInNo);
 				cart.setProductModel(productModel);
 				cart.setProductMemory(productMemory);
@@ -189,9 +195,11 @@ public class CartDAO {
 		try {
 			String sql = prop.getProperty("cart");
 
-			stmt = conn.createStatement();
-
-			rs = stmt.executeQuery(sql);
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, cart.getUserNo());
+			
+			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
 				result = rs.getInt(1);

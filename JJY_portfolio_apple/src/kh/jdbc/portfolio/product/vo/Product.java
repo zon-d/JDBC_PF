@@ -18,9 +18,17 @@ public class Product {
 		this.productCorlor = productCorlor;
 	}
 
+	
+
 	public Product(String productModel) {
 		super();
 		this.productModel = productModel;
+	}
+
+	public Product(String productModel, String productCorlor) {
+		super();
+		this.productModel = productModel;
+		this.productCorlor = productCorlor;
 	}
 
 	public void setProductType(String productType) {

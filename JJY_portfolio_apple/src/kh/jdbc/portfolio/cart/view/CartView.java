@@ -1,91 +1,82 @@
 package kh.jdbc.portfolio.cart.view;
 
-import java.util.Formatter;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 import kh.jdbc.portfolio.cart.model.service.CartService;
 import kh.jdbc.portfolio.cart.model.vo.Cart;
-import kh.jdbc.portfolio.main.view.MainView;
+import kh.jdbc.portfolio.member.vo.User;
 
 public class CartView {
 
 	private static CartService cService = new CartService();
-	private static Cart cart = new Cart();
 	Scanner sc = new Scanner(System.in);
+
+	public User insertUser = null;
 
 	/**
 	 * 장바구니
 	 * 
 	 * @throws Exception
 	 */
-	public void cartMenu() throws Exception {
+	public void cartMenu() {
 
-		Scanner sc = new Scanner(System.in);
 		int input = -1;
 
 		try {
 
 			List<Cart> cartList = cService.cartList();
+
+			if (cartList.isEmpty()) {
+				System.out.println("장바구니에 상품이 없습니다.\n");
+
+			} else {
+
+				System.out.printf("장바구니에 %d 개의 상품이 있습니다.\n\n", cService.cart());
+
+			}
 			do {
 
-				if (cartList.isEmpty()) {
-					System.out.println("장바구니에 상품이 없습니다.\n");
+				System.out.println("***** 장바구니 *****");
+				System.out.println("1. 장바구니 상세 조회");
+				System.out.println("2. 장바구니 선택 주문");
+				System.out.println("3. 장바구니 전체 주문");
+				System.out.println("4. 장바구니 선택 삭제");
+				System.out.println("5. 장바구니 전체 삭제");
+				System.out.println("0. 메인메뉴");
+
+				System.out.print("\n메뉴 선택 : ");
+
+				input = sc.nextInt();
+				sc.nextLine();
+
+				switch (input) {
+				case 1:
+					cartList();
 					break;
-					
-				} else {
-					for (Cart c : cartList) {
+				case 2:
 
-						System.out.printf("장바구니에 %d 개의 상품이 있습니다.\n\n", cService.cart());
-						break;
+					break;
+				case 3:
 
-					}
-					do {
-
-						System.out.println("***** 장바구니 *****");
-						System.out.println("1. 장바구니 상세 조회");
-						System.out.println("2. 장바구니 선택 주문");
-						System.out.println("3. 장바구니 전체 주문");
-						System.out.println("4. 장바구니 선택 삭제");
-						System.out.println("5. 장바구니 전체 삭제");
-						System.out.println("0. 메인메뉴");
-
-						System.out.print("\n메뉴 선택 : ");
-
-						input = sc.nextInt();
-						sc.nextLine();
-
-						switch (input) {
-						case 1:
-							cartList();
-							break;
-						case 2:
-
-							break;
-						case 3:
-
-							break;
-						case 4:
-							deleteCart();
-							break;
-						case 5:
-							deleteAll();
-							break;
-						case 0:
-							MainView.mainMenu();
-							System.out.println("\n<<메인메뉴로 돌아갑니다.>>\n");
-							break;
-						default:
-							System.out.println("메뉴에 작성된 번호를 입력해주세요.");
-
-						}
-					} while (input != 0);
+					break;
+				case 4:
+					deleteCart();
+					break;
+				case 5:
+					deleteAll();
+					break;
+				case 0:
+					System.out.println("\n<<메인메뉴로 돌아갑니다.>>\n");
+					userMenu();
+					return;
+				default:
+					System.out.println("메뉴에 작성된 번호를 입력해주세요.");
 
 				}
 			} while (cartList != null);
 
-		} catch (InputMismatchException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -127,7 +118,6 @@ public class CartView {
 
 		try {
 
-			Scanner sc = new Scanner(System.in);
 			List<Cart> cartList = cService.cartList();
 
 			for (Cart c : cartList) {
@@ -174,7 +164,6 @@ public class CartView {
 	public void deleteAll() {
 
 		try {
-			Scanner sc = new Scanner(System.in);
 
 			List<Cart> cartList = cService.cartList();
 

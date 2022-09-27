@@ -29,7 +29,7 @@ public class MainDAO {
 		}
 	}
 
-	public int cartIn(Connection conn, Product product) throws Exception {
+	public int cartIn(Connection conn, Product product, int userNo) throws Exception {
 
 		int result = 0;
 
@@ -39,14 +39,80 @@ public class MainDAO {
 
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1, product.getProductModel());
-			pstmt.setString(2, product.getProductMemory());
-			pstmt.setString(3, product.getProductCorlor());
+			pstmt.setInt(1, userNo);
+			pstmt.setString(2, product.getProductModel());
+			pstmt.setString(3, product.getProductMemory());
+			pstmt.setString(4, product.getProductCorlor());
 
 			result = pstmt.executeUpdate();
 			try {
 
 				String price = prop.getProperty("cartPrice");
+
+				stmt = conn.createStatement();
+
+				rs = stmt.executeQuery(price);
+			} finally {
+				close(rs);
+				close(stmt);
+
+			}
+
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+	public int cartIn2(Connection conn, Product product) throws SQLException {
+		int result = 0;
+
+		try {
+
+			String sql = prop.getProperty("cartIn2");
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, product.getProductModel());
+
+			result = pstmt.executeUpdate();
+			try {
+
+				String price = prop.getProperty("cartPrice2");
+
+				stmt = conn.createStatement();
+
+				rs = stmt.executeQuery(price);
+			} finally {
+				close(rs);
+				close(stmt);
+
+			}
+
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+	public int cartIn3(Connection conn, Product product) throws SQLException {
+		int result = 0;
+
+		try {
+
+			String sql = prop.getProperty("cartIn3");
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, product.getProductModel());
+			pstmt.setString(2, product.getProductCorlor());
+
+			result = pstmt.executeUpdate();
+			try {
+
+				String price = prop.getProperty("cartPrice2");
 
 				stmt = conn.createStatement();
 
