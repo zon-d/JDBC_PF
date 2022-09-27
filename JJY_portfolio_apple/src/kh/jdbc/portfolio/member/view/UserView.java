@@ -29,12 +29,38 @@ public class UserView {
 
 			try {
 
-				
+				if (insertUser == null) {
+					System.out.println("\n***** 안녕하세요 *****\n");
+					System.out.println("1. 사용자 정보 확인");
+					System.out.println("2. 사용자 정보 추가");
+					System.out.println("0. 프로그램 종료");
+
+					System.out.print("\n메뉴 선택 : ");
+
+					input = sc.nextInt();
+					sc.nextLine(); // 입력 버퍼 개행문자 제거
+					System.out.println();
+
+					switch (input) {
+					case 1:
+						login();
+						break;
+					case 2:
+						signUp();
+						break;
+					case 0:
+						System.out.println("프로그램 종료");
+						break;
+					default:
+						System.out.println("메뉴에 작성된 번호만 입력해주세요.");
+					}
+				} else { // 로그인 O
 
 					System.out.println("****** 메인메뉴 *****");
 					System.out.println("1. 상품리스트");
 					System.out.println("2. 장바구니");
 					System.out.println("3. 주문배송");
+					System.out.println("4. 마이페이지");
 					System.out.println("0. 프로그램 종료");
 
 					System.out.print("\n메뉴 선택 : ");
@@ -48,7 +74,7 @@ public class UserView {
 						mainView.productList(insertUser);
 						break;
 					case 2:
-						cartView.cartMenu(insertUser, cart);
+						cartView.cartMenu();
 						break;
 					case 3:
 //								viewShipping(insertUser);

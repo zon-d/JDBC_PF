@@ -1,5 +1,6 @@
 package kh.jdbc.portfolio.cart.view;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -27,10 +28,20 @@ public class CartView {
 
 			List<Cart> cartList = cService.cartList();
 
-			if (cartList.isEmpty()) {
-				System.out.println("장바구니에 상품이 없습니다.\n");
+			if (!cartList.isEmpty()) {
+				for(Cart cart : cartList) {
+					if(cart.getUserNo() == insertUser.getUserNo()) {
+						
+					}
+				}
 
 			} else {
+				
+				System.out.println("장바구니에 상품이 없습니다.\n");
+					
+				}
+				
+				
 
 				System.out.printf("장바구니에 %d 개의 상품이 있습니다.\n\n", cService.cart());
 
@@ -68,7 +79,6 @@ public class CartView {
 					break;
 				case 0:
 					System.out.println("\n<<메인메뉴로 돌아갑니다.>>\n");
-					userMenu();
 					return;
 				default:
 					System.out.println("메뉴에 작성된 번호를 입력해주세요.");

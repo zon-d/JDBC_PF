@@ -553,7 +553,7 @@ public class MainView {
 						return;
 					case 2:
 						System.out.println();
-						cartView.cartMenu(insertUser, cart);
+						cartView.cartMenu();
 						break;
 					case 0:
 						System.out.println("\n<<메인화면으로 돌아갑니다.>>\n");
@@ -778,7 +778,7 @@ public class MainView {
 						return;
 					case 2:
 						System.out.println();
-						cartView.cartMenu(insertUser, cart);
+						cartView.cartMenu();
 						break;
 					case 0:
 						System.out.println("\n<<메인화면으로 돌아갑니다.>>\n");
@@ -876,7 +876,7 @@ public class MainView {
 							return;
 						case 2:
 							System.out.println();
-							cartView.cartMenu(insertUser, cart);
+							cartView.cartMenu();
 							break;
 						case 0:
 							System.out.println("\n<<메인화면으로 돌아갑니다.>>\n");
@@ -972,7 +972,7 @@ public class MainView {
 							return;
 						case 2:
 							System.out.println();
-							cartView.cartMenu(insertUser, cart);
+							cartView.cartMenu();
 							break;
 						case 0:
 							System.out.println("\n<<메인화면으로 돌아갑니다.>>\n");

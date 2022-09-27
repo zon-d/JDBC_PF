@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Properties;
 
 import kh.jdbc.portfolio.cart.model.vo.Cart;
-import kh.jdbc.portfolio.cart.view.CartView;
 import kh.jdbc.portfolio.member.vo.User;
 
 public class CartDAO {
@@ -56,7 +55,7 @@ public class CartDAO {
 			rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
-				
+
 				int userNo = rs.getInt("USER_NO");
 				int cartInNo = rs.getInt("CARTIN_NO");
 				String productModel = rs.getString("PRODUCT_MODEL");
@@ -196,17 +195,13 @@ public class CartDAO {
 			String sql = prop.getProperty("cart");
 
 			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, cart.getUserNo());
-			
+
+			pstmt.setInt(1, insertUser.getUserNo());
+
 			rs = pstmt.executeQuery();
 
-			if (rs.next()) {
-				result = rs.getInt(1);
-			}
-
 		} finally {
-			close(stmt);
+			close(pstmt);
 		}
 		return result;
 	}
