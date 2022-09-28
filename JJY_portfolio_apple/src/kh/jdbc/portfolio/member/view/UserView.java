@@ -18,7 +18,7 @@ public class UserView {
 	public MyPageView mypage = new MyPageView();
 	public Cart cart = new Cart();
 
-	private User insertUser = null;
+	public static User insertUser = null;
 	Scanner sc = new Scanner(System.in);
 
 	public void userMenu() {

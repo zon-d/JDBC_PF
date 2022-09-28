@@ -14,6 +14,7 @@ public class CartService {
 
 	/**
 	 * 장바구니 조회 서비스
+	 * 
 	 * @return
 	 */
 	public List<Cart> cartList() throws Exception {
@@ -68,37 +69,42 @@ public class CartService {
 		return result;
 	}
 
-	/** 
+	/**
 	 * 장바구니에 담긴 상품 개수
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
-	public Object cart() throws Exception{
+	public int cart() throws Exception {
 
 		Connection conn = getConnection();
-		
+
 		int result = cdao.cart(conn);
-		
+
 		close(conn);
-		
+
 		return result;
 	}
 
-	/** 장바구니 전체 삭제
+	/**
+	 * 장바구니 전체 삭제
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
-	public int deleteAllCart() throws Exception{
+	public int deleteAllCart() throws Exception {
 
 		Connection conn = getConnection();
-		
+
 		int result = cdao.deleteAllCart(conn);
-		
-		if(result > 0) commit(conn);
-		else  	       rollback(conn);
-		
+
+		if (result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+
 		close(conn);
-		
+
 		return result;
 	}
 

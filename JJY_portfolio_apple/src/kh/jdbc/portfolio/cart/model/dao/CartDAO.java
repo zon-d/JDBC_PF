@@ -6,23 +6,22 @@ import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
+//import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 import kh.jdbc.portfolio.cart.model.vo.Cart;
+import kh.jdbc.portfolio.member.view.UserView;
 import kh.jdbc.portfolio.member.vo.User;
 
 public class CartDAO {
 
-	private Statement stmt = null;
+//	private Statement stmt = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 	Cart cart = new Cart();
 	User user = new User();
-
-	public User insertUser = null;
 
 	private Properties prop = null;
 
@@ -50,13 +49,14 @@ public class CartDAO {
 		try {
 			String sql = prop.getProperty("viewCartList");
 
-			stmt = conn.createStatement();
+			pstmt = conn.prepareStatement(sql);
 
-			rs = stmt.executeQuery(sql);
+			pstmt.setInt(1, UserView.insertUser.getUserNo());
 
-			while (rs.next()) {
+			rs = pstmt.executeQuery();
 
-				int userNo = rs.getInt("USER_NO");
+			if (rs.next()) {
+
 				int cartInNo = rs.getInt("CARTIN_NO");
 				String productModel = rs.getString("PRODUCT_MODEL");
 				String productMemory = rs.getString("PRODUCT_MEMORY");
@@ -65,7 +65,6 @@ public class CartDAO {
 
 				Cart cart = new Cart();
 
-				cart.setUserNo(userNo);
 				cart.setCartInNo(cartInNo);
 				cart.setProductModel(productModel);
 				cart.setProductMemory(productMemory);
@@ -77,7 +76,7 @@ public class CartDAO {
 
 		} finally {
 			close(rs);
-			close(stmt);
+			close(pstmt);
 
 		}
 
@@ -99,9 +98,11 @@ public class CartDAO {
 		try {
 			String sql = prop.getProperty("priceSum");
 
-			stmt = conn.createStatement();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, UserView.insertUser.getUserNo());
 
-			rs = stmt.executeQuery(sql);
+			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
 				priceSum = rs.getInt(1);
@@ -109,7 +110,7 @@ public class CartDAO {
 
 		} finally {
 			close(rs);
-			close(stmt);
+			close(pstmt);
 
 		}
 
@@ -196,11 +197,12 @@ public class CartDAO {
 
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setInt(1, insertUser.getUserNo());
+			pstmt.setInt(1, UserView.insertUser.getUserNo());
 
 			rs = pstmt.executeQuery();
 
 		} finally {
+			close(rs);
 			close(pstmt);
 		}
 		return result;
@@ -223,6 +225,27 @@ public class CartDAO {
 		}
 
 		return result;
+	}
+
+	public Cart myCart(Connection conn) throws Exception {
+
+		Cart cart = null;
+
+		try {
+
+			String sql = prop.getProperty("cart");
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, UserView.insertUser.getUserNo());
+
+			rs = pstmt.executeQuery();
+
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return cart;
 	}
 
 }

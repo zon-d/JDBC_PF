@@ -1,19 +1,18 @@
 package kh.jdbc.portfolio.cart.view;
 
-import java.util.InputMismatchException;
+//import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 import kh.jdbc.portfolio.cart.model.service.CartService;
 import kh.jdbc.portfolio.cart.model.vo.Cart;
-import kh.jdbc.portfolio.member.vo.User;
+//import kh.jdbc.portfolio.member.view.UserView;
+//import kh.jdbc.portfolio.member.vo.User;
 
 public class CartView {
 
 	private static CartService cService = new CartService();
 	Scanner sc = new Scanner(System.in);
-
-	public User insertUser = null;
 
 	/**
 	 * 장바구니
@@ -28,24 +27,19 @@ public class CartView {
 
 			List<Cart> cartList = cService.cartList();
 
-			if (!cartList.isEmpty()) {
-				for(Cart cart : cartList) {
-					if(cart.getUserNo() == insertUser.getUserNo()) {
-						
-					}
-				}
+//			int userNo = UserView.insertUser.getUserNo();
+//
+//			Cart cart = cService.myCart(userNo);
+
+			if (cartList.isEmpty()) {
+				System.out.println("장바구니에 상품이 없습니다.\n");
 
 			} else {
-				
-				System.out.println("장바구니에 상품이 없습니다.\n");
-					
-				}
-				
-				
 
 				System.out.printf("장바구니에 %d 개의 상품이 있습니다.\n\n", cService.cart());
 
 			}
+
 			do {
 
 				System.out.println("***** 장바구니 *****");

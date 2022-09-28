@@ -6,13 +6,14 @@
 	<!-- 장바구니 상품 개수 -->
 	<entry key = "cart">
 		SELECT COUNT(*) FROM CART
-		WHERE ?
+		WHERE USER_NO = ?
 	</entry>
 	
 	
 	<!-- 장바구니 목록 -->
 	<entry key="viewCartList">
 		SELECT * FROM CART
+		WHERE USER_NO = ?
 	</entry>
 	
 	<!-- 장바구니 상품 금액 합계 -->
