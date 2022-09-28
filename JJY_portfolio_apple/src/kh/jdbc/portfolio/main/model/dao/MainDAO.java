@@ -75,7 +75,8 @@ public class MainDAO {
 
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1, product.getProductModel());
+			pstmt.setInt(1, UserView.insertUser.getUserNo());
+			pstmt.setString(2, product.getProductModel());
 
 			result = pstmt.executeUpdate();
 			try {
@@ -107,8 +108,9 @@ public class MainDAO {
 
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1, product.getProductModel());
-			pstmt.setString(2, product.getProductCorlor());
+			pstmt.setInt(1, UserView.insertUser.getUserNo());
+			pstmt.setString(2, product.getProductModel());
+			pstmt.setString(3, product.getProductCorlor());
 
 			result = pstmt.executeUpdate();
 			try {

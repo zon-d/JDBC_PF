@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Properties;
 
+import kh.jdbc.portfolio.member.view.UserView;
 import kh.jdbc.portfolio.member.vo.User;
 
 public class MyPageDAO {
@@ -52,6 +53,28 @@ public class MyPageDAO {
 
 		} finally {
 
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+	public int deleteUser(Connection conn, String userName, String userPhone, int userNo) throws Exception {
+		int result = 0;
+
+		try {
+
+			String sql = prop.getProperty("deleteUser");
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, UserView.insertUser.getUserNo());
+			pstmt.setString(2, userName);
+			pstmt.setString(3, userPhone);
+
+			result = pstmt.executeUpdate();
+
+		} finally {
 			close(pstmt);
 		}
 

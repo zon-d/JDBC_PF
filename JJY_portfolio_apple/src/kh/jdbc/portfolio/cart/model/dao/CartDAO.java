@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
 
 import kh.jdbc.portfolio.cart.model.vo.Cart;
 import kh.jdbc.portfolio.member.view.UserView;
@@ -43,7 +44,7 @@ public class CartDAO {
 	 * @return cartList
 	 * @throws Exception
 	 */
-	public List<Cart> cartList(Connection conn) throws Exception {
+	public List<Cart> cartList(Connection conn, int userNo) throws Exception {
 
 		List<Cart> cartList = new ArrayList<>();
 
@@ -58,7 +59,7 @@ public class CartDAO {
 
 			while (rs.next()) {
 
-				int userNo = rs.getInt("USER_NO");
+//				int userNo = rs.getInt("USER_NO");
 				int cartInNo = rs.getInt("CARTIN_NO");
 				String productModel = rs.getString("PRODUCT_MODEL");
 				String productMemory = rs.getString("PRODUCT_MEMORY");
@@ -183,6 +184,7 @@ public class CartDAO {
 		int result = 0;
 
 		try {
+
 			String sql = prop.getProperty("deleteCart");
 
 			pstmt = conn.prepareStatement(sql);
@@ -204,11 +206,10 @@ public class CartDAO {
 	 * 장바구니에 담긴 상품 갯수
 	 * 
 	 * @param conn
-	 * @param userNo 
 	 * @return
 	 * @throws Exception
 	 */
-	public int cart(Connection conn, int userNo) throws Exception {
+	public int cart(Connection conn) throws Exception {
 
 		int result = 0;
 
@@ -256,23 +257,126 @@ public class CartDAO {
 		return result;
 	}
 
-	public int order(Connection conn, int cartInNo) throws Exception {
+	/**
+	 * 장바구니 상품 선택 주문
+	 * 
+	 * @param conn
+	 * @param cartInNo
+	 * @return
+	 * @throws Exception
+	 */
+	public int order(Connection conn, int cartInNo2) throws Exception {
 		int result = 0;
 
+		List<Cart> cartList = new ArrayList<>();
+
 		try {
-			String sql = prop.getProperty("order");
+			String sql = prop.getProperty("viewCartList1");
 
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, UserView.insertUser.getUserNo());
-			pstmt.setString(2, UserView.insertUser.getUserName());
-			pstmt.setString(3, UserView.insertUser.getUserPhone());
-			pstmt.setString(4, cart.getProductModel());
-			pstmt.setString(5, cart.getProductMemory());
-			pstmt.setString(6, cart.getProductCorlor());
-			pstmt.setInt(7, cart.getProductPrice());
+			pstmt.setInt(2, cartInNo2);
 
-			result = pstmt.executeUpdate();
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				int userNo = rs.getInt("USER_NO");
+				int cartInNo = rs.getInt("CARTIN_NO");
+				String productModel = rs.getString("PRODUCT_MODEL");
+				String productMemory = rs.getString("PRODUCT_MEMORY");
+				String productCorlor = rs.getString("PRODUCT_CORLOR");
+				int productPrice = rs.getInt("PRODUCT_PRICE");
+
+				Cart cart = new Cart();
+
+				cart.setUserNo(userNo);
+				cart.setCartInNo(cartInNo);
+				cart.setProductModel(productModel);
+				cart.setProductMemory(productMemory);
+				cart.setProductCorlor(productCorlor);
+				cart.setProductPrice(productPrice);
+
+				cartList.add(cart);
+
+				String sql2 = prop.getProperty("order");
+
+				pstmt = conn.prepareStatement(sql2);
+
+				pstmt.setInt(1, UserView.insertUser.getUserNo());
+				pstmt.setString(2, UserView.insertUser.getUserName());
+				pstmt.setString(3, UserView.insertUser.getUserPhone());
+				pstmt.setString(4, cart.getProductModel());
+				pstmt.setString(5, cart.getProductMemory());
+				pstmt.setString(6, cart.getProductCorlor());
+				pstmt.setInt(7, cart.getProductPrice());
+
+				result = pstmt.executeUpdate();
+			}
+
+		} finally {
+			close(pstmt);
+
+		}
+
+		return result;
+	}
+
+	/**
+	 * 장바구니 전체 주문
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
+	public int orderAll(Connection conn) throws Exception {
+		int result = 0;
+
+		List<Cart> cartList = new ArrayList<>();
+
+		try {
+			String sql = prop.getProperty("viewCartList");
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, UserView.insertUser.getUserNo());
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				int userNo = rs.getInt("USER_NO");
+				int cartInNo = rs.getInt("CARTIN_NO");
+				String productModel = rs.getString("PRODUCT_MODEL");
+				String productMemory = rs.getString("PRODUCT_MEMORY");
+				String productCorlor = rs.getString("PRODUCT_CORLOR");
+				int productPrice = rs.getInt("PRODUCT_PRICE");
+
+				Cart cart = new Cart();
+
+				cart.setUserNo(userNo);
+				cart.setCartInNo(cartInNo);
+				cart.setProductModel(productModel);
+				cart.setProductMemory(productMemory);
+				cart.setProductCorlor(productCorlor);
+				cart.setProductPrice(productPrice);
+
+				cartList.add(cart);
+
+				String sql2 = prop.getProperty("order");
+
+				pstmt = conn.prepareStatement(sql2);
+
+				pstmt.setInt(1, UserView.insertUser.getUserNo());
+				pstmt.setString(2, UserView.insertUser.getUserName());
+				pstmt.setString(3, UserView.insertUser.getUserPhone());
+				pstmt.setString(4, cart.getProductModel());
+				pstmt.setString(5, cart.getProductMemory());
+				pstmt.setString(6, cart.getProductCorlor());
+				pstmt.setInt(7, cart.getProductPrice());
+
+				result = pstmt.executeUpdate();
+			}
 
 		} finally {
 			close(pstmt);

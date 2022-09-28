@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>order-query.xml file</comment>
+
+	<!-- 주문 리스트 -->
+	<entry key = "orderList">
+		SELECT * FROM "ORDER"
+		WHERE USER_NO = ?
+	</entry>
+	
+	<!-- 주문목록 금액 합계 -->
+	<entry key="priceSum">
+		SELECT SUM(PRODUCT_PRICE)
+		FROM "ORDER"
+		WHERE USER_NO = ?
+	</entry>
+	
+	<!-- 주문 내역 삭제 -->
+	<entry key = "deleteOrder">
+		DELETE FROM "ORDER"
+		WHERE ORDER_NO = ?
+	</entry>
+	
+</properties>

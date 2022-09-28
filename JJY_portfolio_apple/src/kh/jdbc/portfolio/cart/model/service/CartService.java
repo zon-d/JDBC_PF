@@ -14,14 +14,15 @@ public class CartService {
 
 	/**
 	 * 장바구니 조회 서비스
-	 * @param userNo 
+	 * 
+	 * @param userNo
 	 * 
 	 * @return
 	 */
 	public List<Cart> cartList(int userNo) throws Exception {
 		Connection conn = getConnection();
 
-		List<Cart> cartList = cdao.cartList(conn);
+		List<Cart> cartList = cdao.cartList(conn, userNo);
 
 		close(conn);
 
@@ -83,7 +84,8 @@ public class CartService {
 
 	/**
 	 * 장바구니에 담긴 상품 개수
-	 * @param userNo 
+	 * 
+	 * @param userNo
 	 * 
 	 * @return
 	 * @throws Exception
@@ -92,7 +94,7 @@ public class CartService {
 
 		Connection conn = getConnection();
 
-		int result = cdao.cart(conn, userNo);
+		int result = cdao.cart(conn);
 
 		close(conn);
 
@@ -127,10 +129,10 @@ public class CartService {
 	 * @param cartInNo
 	 * @return
 	 */
-	public int order(int cartInNo) throws Exception {
+	public int order(int cartInNo2) throws Exception {
 		Connection conn = getConnection();
 
-		int result = cdao.order(conn, cartInNo);
+		int result = cdao.order(conn, cartInNo2);
 
 		if (result > 0)
 			commit(conn);
@@ -142,6 +144,25 @@ public class CartService {
 		return result;
 	}
 
+	/**
+	 * 장바구니 전체 주문
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public int orderAll() throws Exception {
+		Connection conn = getConnection();
 
+		int result = cdao.orderAll(conn);
+
+		if (result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+
+		close(conn);
+
+		return result;
+	}
 
 }

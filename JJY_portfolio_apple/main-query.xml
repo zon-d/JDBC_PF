@@ -43,7 +43,7 @@
 		UPDATE CART C
 		SET C.PRODUCT_PRICE = (SELECT PRODUCT_PRICE
 								FROM PRODUCT P
-								WHERE C.PRODUCT_MODEL = P.PRODUCT_MODEL)
+								WHERE P.PRODUCT_MODEL = ?)
 	</entry>							
 								
 </properties>

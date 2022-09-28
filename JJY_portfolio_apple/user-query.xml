@@ -32,4 +32,12 @@
 		WHERE USER_NO = ?
 	</entry>
 	
+	<!-- 사용자 정보 삭제 -->
+	<entry key = "deleteUser">
+		DELETE FROM "USER"
+		WHERE USER_NO = ?
+		AND USER_NM = ?
+		AND USER_PH = ?
+	</entry>
+	
 </properties>

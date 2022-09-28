@@ -26,4 +26,25 @@ public class MyPageService {
 		return result;
 	}
 
+	/**
+	 * 사용자 정보 삭제
+	 * @param userName
+	 * @param userPhone
+	 * @param userNo
+	 * @return
+	 * @throws Exception
+	 */
+	public int deleteUser(String userName, String userPhone, int userNo) throws Exception {
+		Connection conn = getConnection();
+		
+		int result = mpdao.deleteUser(conn, userName, userPhone, userNo);
+		
+		if(result > 0) commit(conn);
+		else           rollback(conn);
+		
+		close(conn);
+		
+		return result;
+	}
+
 }

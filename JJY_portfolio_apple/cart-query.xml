@@ -24,6 +24,12 @@
 		FROM CART
 		WHERE USER_NO = ?
 	</entry>
+	
+	<entry key="viewCartList1">
+		SELECT * FROM CART
+		WHERE USER_NO = ?
+		AND CARTIN_NO = ?
+	</entry>
 
 
 	<!-- 장바구니 상품 삭제 -->

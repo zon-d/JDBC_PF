@@ -8,8 +8,6 @@ import kh.jdbc.portfolio.cart.model.service.CartService;
 import kh.jdbc.portfolio.cart.model.vo.Cart;
 import kh.jdbc.portfolio.cart.view.CartView;
 import kh.jdbc.portfolio.main.model.service.MainService;
-import kh.jdbc.portfolio.member.view.UserView;
-import kh.jdbc.portfolio.member.vo.User;
 import kh.jdbc.portfolio.product.vo.Product;
 
 public class MainView {
@@ -208,7 +206,7 @@ public class MainView {
 				case 2:
 					System.out.println();
 					cartView.cartMenu();
-					break;
+					return;
 				default:
 					System.out.println("잘못 입력하셨습니다.");
 
@@ -552,7 +550,7 @@ public class MainView {
 					case 2:
 						System.out.println();
 						cartView.cartMenu();
-						break;
+						return;
 					default:
 						System.out.println("잘못 입력하셨습니다.");
 
@@ -774,7 +772,7 @@ public class MainView {
 					case 2:
 						System.out.println();
 						cartView.cartMenu();
-						break;
+						return;
 					case 0:
 						System.out.println("\n<<메인화면으로 돌아갑니다.>>\n");
 						return;
@@ -820,11 +818,182 @@ public class MainView {
 
 			if (input == 1) {
 				productModel = "에어팟 2세대";
+				Product product = new Product(productModel);
+
+				int result = service.cartIn2(product);
+
+				System.out.println();
+				if (result > 0) {
+					System.out.println("\n[입력하신 상품이 맞는지 확인해주세요.]\n");
+					System.out.printf("모델명 : %s\n", productModel);
+
+				} else {
+					System.out.println("<<상품 선택 실패>>");
+				}
+
+				try {
+					System.out.println("1. 장바구니 담기");
+					System.out.println("2. 취소");
+					System.out.print("\n메뉴 선택 : ");
+					int input1 = sc.nextInt();
+
+					System.out.println();
+
+					if (input1 == 1) {
+						System.out.println("\n<<장바구니에 담았습니다>>\n");
+					} else if (input1 == 2) {
+						System.out.println("\n<<입력하신 상품을 취소했습니다>>\n");
+					}
+
+					System.out.println("1. 상품리스트");
+					System.out.println("2. 장바구니");
+
+					System.out.println();
+
+					System.out.print("메뉴 선택 : ");
+					int input2 = sc.nextInt();
+
+					do {
+
+						switch (input2) {
+						case 1:
+							System.out.println("\n<<상품리스트로 돌아갑니다>>\n");
+							return;
+						case 2:
+							System.out.println();
+							cartView.cartMenu();
+							break;
+						default:
+							System.out.println("잘못 입력하셨습니다.");
+
+						}
+						System.out.println();
+
+					} while (input2 != 0);
+
+				} catch (InputMismatchException e) {
+					e.printStackTrace();
+				}
 
 			} else if (input == 2) {
 				productModel = "에어팟 3세대";
+				Product product = new Product(productModel);
+
+				int result = service.cartIn2(product);
+
+				System.out.println();
+				if (result > 0) {
+					System.out.println("\n[입력하신 상품이 맞는지 확인해주세요.]\n");
+					System.out.printf("모델명 : %s\n", productModel);
+
+				} else {
+					System.out.println("<<상품 선택 실패>>");
+				}
+
+				try {
+					System.out.println("1. 장바구니 담기");
+					System.out.println("2. 취소");
+					System.out.print("\n메뉴 선택 : ");
+					int input1 = sc.nextInt();
+
+					System.out.println();
+
+					if (input1 == 1) {
+						System.out.println("\n<<장바구니에 담았습니다>>\n");
+					} else if (input1 == 2) {
+						System.out.println("\n<<입력하신 상품을 취소했습니다>>\n");
+					}
+
+					System.out.println("1. 상품리스트");
+					System.out.println("2. 장바구니");
+
+					System.out.println();
+
+					System.out.print("메뉴 선택 : ");
+					int input2 = sc.nextInt();
+
+					do {
+
+						switch (input2) {
+						case 1:
+							System.out.println("\n<<상품리스트로 돌아갑니다>>\n");
+							return;
+						case 2:
+							System.out.println();
+							cartView.cartMenu();
+							break;
+						default:
+							System.out.println("잘못 입력하셨습니다.");
+
+						}
+						System.out.println();
+
+					} while (input2 != 0);
+
+				} catch (InputMismatchException e) {
+					e.printStackTrace();
+				}
 
 			} else if (input == 3) {
+				productModel = "에어팟 3세대 맥세이프";
+				Product product = new Product(productModel);
+
+				int result = service.cartIn2(product);
+
+				System.out.println();
+				if (result > 0) {
+					System.out.println("\n[입력하신 상품이 맞는지 확인해주세요.]\n");
+					System.out.printf("모델명 : %s\n", productModel);
+
+				} else {
+					System.out.println("<<상품 선택 실패>>");
+				}
+
+				try {
+					System.out.println("1. 장바구니 담기");
+					System.out.println("2. 취소");
+					System.out.print("\n메뉴 선택 : ");
+					int input1 = sc.nextInt();
+
+					System.out.println();
+
+					if (input1 == 1) {
+						System.out.println("\n<<장바구니에 담았습니다>>\n");
+					} else if (input1 == 2) {
+						System.out.println("\n<<입력하신 상품을 취소했습니다>>\n");
+					}
+
+					System.out.println("1. 상품리스트");
+					System.out.println("2. 장바구니");
+
+					System.out.println();
+
+					System.out.print("메뉴 선택 : ");
+					int input2 = sc.nextInt();
+
+					do {
+
+						switch (input2) {
+						case 1:
+							System.out.println("\n<<상품리스트로 돌아갑니다>>\n");
+							return;
+						case 2:
+							System.out.println();
+							cartView.cartMenu();
+							break;
+						default:
+							System.out.println("잘못 입력하셨습니다.");
+
+						}
+						System.out.println();
+
+					} while (input2 != 0);
+
+				} catch (InputMismatchException e) {
+					e.printStackTrace();
+				}
+
+			} else if (input == 4) {
 				productModel = "에어팟 프로 2세대";
 
 				Product product = new Product(productModel);

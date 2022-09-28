@@ -9,6 +9,7 @@ import kh.jdbc.portfolio.main.view.MainView;
 import kh.jdbc.portfolio.member.model.service.UserService;
 import kh.jdbc.portfolio.member.vo.User;
 import kh.jdbc.portfolio.mypage.view.MyPageView;
+import kh.jdbc.portfolio.order.view.OrderView;
 
 public class UserView {
 
@@ -17,6 +18,7 @@ public class UserView {
 	public CartView cartView = new CartView();
 	public MyPageView mypage = new MyPageView();
 	public Cart cart = new Cart();
+	public OrderView orderView = new OrderView();
 
 	public static User insertUser = null;
 	Scanner sc = new Scanner(System.in);
@@ -31,7 +33,7 @@ public class UserView {
 
 				if (insertUser == null) {
 					System.out.println("\n***** 안녕하세요 *****\n");
-					System.out.println("1. 사용자 정보 확인");
+					System.out.println("1. 서비스 입장");
 					System.out.println("2. 사용자 정보 추가");
 					System.out.println("0. 프로그램 종료");
 
@@ -77,7 +79,7 @@ public class UserView {
 						cartView.cartMenu();
 						break;
 					case 3:
-//								viewShipping(insertUser);
+						orderView.orderMenu();
 						break;
 					case 4:
 						mypage.myPage(insertUser);
@@ -99,8 +101,6 @@ public class UserView {
 		} while (input != 0);
 
 	}
-
-	
 
 	public void signUp() {
 		System.out.println("[사용자 정보 추가]");
