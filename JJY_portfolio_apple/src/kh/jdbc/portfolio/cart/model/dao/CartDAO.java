@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 //import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,8 +56,9 @@ public class CartDAO {
 
 			rs = pstmt.executeQuery();
 
-			if (rs.next()) {
+			while (rs.next()) {
 
+				int userNo = rs.getInt("USER_NO");
 				int cartInNo = rs.getInt("CARTIN_NO");
 				String productModel = rs.getString("PRODUCT_MODEL");
 				String productMemory = rs.getString("PRODUCT_MEMORY");
@@ -65,6 +67,7 @@ public class CartDAO {
 
 				Cart cart = new Cart();
 
+				cart.setUserNo(userNo);
 				cart.setCartInNo(cartInNo);
 				cart.setProductModel(productModel);
 				cart.setProductMemory(productMemory);
@@ -99,7 +102,7 @@ public class CartDAO {
 			String sql = prop.getProperty("priceSum");
 
 			pstmt = conn.prepareStatement(sql);
-			
+
 			pstmt.setInt(1, UserView.insertUser.getUserNo());
 
 			rs = pstmt.executeQuery();
@@ -168,6 +171,14 @@ public class CartDAO {
 //
 //	}
 
+	/**
+	 * 장바구니 선택 삭제
+	 * 
+	 * @param conn
+	 * @param cartInNo
+	 * @return
+	 * @throws Exception
+	 */
 	public int deleteCart(Connection conn, int cartInNo) throws Exception {
 		int result = 0;
 
@@ -177,6 +188,7 @@ public class CartDAO {
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, cartInNo);
+			pstmt.setInt(2, UserView.insertUser.getUserNo());
 
 			result = pstmt.executeUpdate();
 
@@ -188,7 +200,15 @@ public class CartDAO {
 		return result;
 	}
 
-	public int cart(Connection conn) throws Exception {
+	/**
+	 * 장바구니에 담긴 상품 갯수
+	 * 
+	 * @param conn
+	 * @param userNo 
+	 * @return
+	 * @throws Exception
+	 */
+	public int cart(Connection conn, int userNo) throws Exception {
 
 		int result = 0;
 
@@ -202,12 +222,19 @@ public class CartDAO {
 			rs = pstmt.executeQuery();
 
 		} finally {
-			close(rs);
+
 			close(pstmt);
 		}
 		return result;
 	}
 
+	/**
+	 * 장바구니 전체 삭제
+	 * 
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
 	public int deleteAllCart(Connection conn) throws Exception {
 
 		int result = 0;
@@ -217,6 +244,8 @@ public class CartDAO {
 
 			pstmt = conn.prepareStatement(sql);
 
+			pstmt.setInt(1, UserView.insertUser.getUserNo());
+
 			result = pstmt.executeUpdate();
 
 		} finally {
@@ -227,25 +256,30 @@ public class CartDAO {
 		return result;
 	}
 
-	public Cart myCart(Connection conn) throws Exception {
-
-		Cart cart = null;
+	public int order(Connection conn, int cartInNo) throws Exception {
+		int result = 0;
 
 		try {
-
-			String sql = prop.getProperty("cart");
+			String sql = prop.getProperty("order");
 
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, UserView.insertUser.getUserNo());
+			pstmt.setString(2, UserView.insertUser.getUserName());
+			pstmt.setString(3, UserView.insertUser.getUserPhone());
+			pstmt.setString(4, cart.getProductModel());
+			pstmt.setString(5, cart.getProductMemory());
+			pstmt.setString(6, cart.getProductCorlor());
+			pstmt.setInt(7, cart.getProductPrice());
 
-			rs = pstmt.executeQuery();
+			result = pstmt.executeUpdate();
 
 		} finally {
-			close(rs);
 			close(pstmt);
+
 		}
-		return cart;
+
+		return result;
 	}
 
 }

@@ -41,6 +41,22 @@ public class Cart {
 		this.cartList = cartList;
 	}
 
+	public Cart(int cartInNo, int userNo, List<Cart> cartList) {
+		super();
+		this.cartInNo = cartInNo;
+		this.userNo = userNo;
+		this.cartList = cartList;
+	}
+
+	public Cart(int cartInNo, String productModel, String productMemory, String productCorlor, int productPrice) {
+		super();
+		this.cartInNo = cartInNo;
+		this.productModel = productModel;
+		this.productMemory = productMemory;
+		this.productCorlor = productCorlor;
+		this.productPrice = productPrice;
+	}
+
 	public void setPriceSum(int priceSum) {
 		this.priceSum = priceSum;
 	}

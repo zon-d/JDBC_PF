@@ -2,37 +2,47 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 	<comment>cart-query.xml file</comment>
-	
+
 	<!-- 장바구니 상품 개수 -->
-	<entry key = "cart">
+	<entry key="cart">
 		SELECT COUNT(*) FROM CART
 		WHERE USER_NO = ?
 	</entry>
-	
-	
+
+
+
+
 	<!-- 장바구니 목록 -->
 	<entry key="viewCartList">
 		SELECT * FROM CART
 		WHERE USER_NO = ?
 	</entry>
-	
+
 	<!-- 장바구니 상품 금액 합계 -->
 	<entry key="priceSum">
 		SELECT SUM(PRODUCT_PRICE)
 		FROM CART
 		WHERE USER_NO = ?
 	</entry>
-	
-	
+
+
 	<!-- 장바구니 상품 삭제 -->
 	<entry key="deleteCart">
 		DELETE FROM CART WHERE CARTIN_NO = ?
+		AND USER_NO = ?
 	</entry>
-	
+
 	<!-- 장바구니 전체 삭제 -->
 	<entry key="deleteAllCart">
 		DELETE FROM CART
+		WHERE USER_NO = ?
 	</entry>
 	
-	
+	<!-- 상품 선택 주문 -->
+	<entry key = "order">
+		INSERT INTO "ORDER"
+		VALUES (?, ?, ?, SEQ_ORDER_NO.NEXTVAL, ?, DEFAULT, ?, ?, ?)
+	</entry>
+
+
 </properties>

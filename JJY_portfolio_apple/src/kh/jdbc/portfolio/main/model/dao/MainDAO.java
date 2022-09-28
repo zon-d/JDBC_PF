@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import kh.jdbc.portfolio.member.view.UserView;
 import kh.jdbc.portfolio.product.vo.Product;
 
 public class MainDAO {
@@ -29,17 +30,17 @@ public class MainDAO {
 		}
 	}
 
-	public int cartIn(Connection conn, Product product, int userNo) throws Exception {
+	public int cartIn(Connection conn, Product product) throws Exception {
 
 		int result = 0;
 
 		try {
 
-			String sql = prop.getProperty("cartIn");
+			String sql = prop.getProperty("cartIn");// + prop.getProperty("updateCart");
 
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setInt(1, userNo);
+			pstmt.setInt(1, UserView.insertUser.getUserNo());
 			pstmt.setString(2, product.getProductModel());
 			pstmt.setString(3, product.getProductMemory());
 			pstmt.setString(4, product.getProductCorlor());

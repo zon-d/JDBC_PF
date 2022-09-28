@@ -24,4 +24,12 @@
 		AND USER_PH = ?
 	</entry>
 	
+	<!-- 사용자 정보 수정 -->
+	<entry key = "updateUser">
+		UPDATE "USER" SET
+		USER_NM = ?,
+		USER_PH = ?
+		WHERE USER_NO = ?
+	</entry>
+	
 </properties>

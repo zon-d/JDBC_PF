@@ -8,6 +8,7 @@ import kh.jdbc.portfolio.cart.model.service.CartService;
 import kh.jdbc.portfolio.cart.model.vo.Cart;
 import kh.jdbc.portfolio.cart.view.CartView;
 import kh.jdbc.portfolio.main.model.service.MainService;
+import kh.jdbc.portfolio.member.view.UserView;
 import kh.jdbc.portfolio.member.vo.User;
 import kh.jdbc.portfolio.product.vo.Product;
 
@@ -20,17 +21,14 @@ public class MainView {
 
 	MainService service = new MainService();
 
-	public User insertUser = null;
-
-	public void productList(User insertUser) {
+	public void productList() {
 
 		int productType = -1;
 
-		this.insertUser = insertUser;
 		try {
 
-			int userNo = insertUser.getUserNo();
 			do {
+
 				System.out.println("***** 상품타입 *****");
 				System.out.println("1. 아이폰");
 				System.out.println("2. 아이패드");
@@ -45,16 +43,16 @@ public class MainView {
 
 				switch (productType) {
 				case 1:
-					iphone(userNo);
+					iphone();
 					break;
 				case 2:
-					ipad(userNo);
+					ipad();
 					break;
 				case 3:
-					applewatch(userNo);
+					applewatch();
 					break;
 				case 4:
-					airpods(userNo);
+					airpods();
 					break;
 				case 0:
 					System.out.println("\n<<메인메뉴로 돌아갑니다.>>\n");
@@ -68,7 +66,7 @@ public class MainView {
 		}
 	}
 
-	public void iphone(int userNo) throws Exception {
+	public void iphone() throws Exception {
 
 		int input = 0;
 		String productModel = null;
@@ -168,7 +166,7 @@ public class MainView {
 
 		Product product = new Product(productModel, productMemory, productCorlor);
 
-		int result = service.cartIn(product, userNo);
+		int result = service.cartIn(product);
 
 		if (result > 0) {
 			System.out.println("\n[입력하신 상품이 맞는지 확인해주세요.]\n");
@@ -193,9 +191,8 @@ public class MainView {
 				System.out.println("\n<<입력하신 상품을 취소했습니다>>\n");
 			}
 
-			System.out.println("1. 쇼핑 계속하기");
+			System.out.println("1. 상품리스트");
 			System.out.println("2. 장바구니");
-			System.out.println("0. 메인화면");
 
 			System.out.println();
 
@@ -212,9 +209,6 @@ public class MainView {
 					System.out.println();
 					cartView.cartMenu();
 					break;
-				case 0:
-					System.out.println("\n<<메인화면으로 돌아갑니다.>>\n");
-					return;
 				default:
 					System.out.println("잘못 입력하셨습니다.");
 
@@ -234,7 +228,7 @@ public class MainView {
 	 * 
 	 * @throws Exception
 	 */
-	public void ipad(int userNo) throws Exception {
+	public void ipad() throws Exception {
 
 		int input = 0;
 		String productModel = null;
@@ -258,7 +252,7 @@ public class MainView {
 			case 0:
 				System.out.println("\n<<상품리스트로 돌아갑니다.>>\n");
 				return;
-				
+
 			}
 
 			if (input == 1) {
@@ -275,11 +269,14 @@ public class MainView {
 
 					if (input == 1) {
 						productMemory = "64G";
+						break;
 					} else if (input == 2) {
 						productMemory = "256G";
+						break;
 					} else {
 						System.out.println("<<메뉴에 있는 번호만 입력해주세요.>>");
 					}
+
 				} while (input != -1);
 
 				do {
@@ -293,8 +290,10 @@ public class MainView {
 
 					if (input == 1) {
 						productCorlor = "스페이스그레이";
+						break;
 					} else if (input == 2) {
 						productCorlor = "실버";
+						break;
 					} else {
 						System.out.println("<<메뉴에 있는 번호만 입력해주세요.>>");
 					}
@@ -511,7 +510,7 @@ public class MainView {
 
 			Product product = new Product(productModel, productMemory, productCorlor);
 
-			int result = service.cartIn(product, userNo);
+			int result = service.cartIn(product);
 
 			System.out.println();
 			if (result > 0) {
@@ -536,9 +535,8 @@ public class MainView {
 					System.out.println("\n<<입력하신 상품을 취소했습니다>>\n");
 				}
 
-				System.out.println("1. 쇼핑 계속하기");
+				System.out.println("1. 상품리스트");
 				System.out.println("2. 장바구니");
-				System.out.println("0. 메인화면");
 
 				System.out.println();
 
@@ -555,9 +553,6 @@ public class MainView {
 						System.out.println();
 						cartView.cartMenu();
 						break;
-					case 0:
-						System.out.println("\n<<메인화면으로 돌아갑니다.>>\n");
-						return;
 					default:
 						System.out.println("잘못 입력하셨습니다.");
 
@@ -573,7 +568,7 @@ public class MainView {
 
 	}
 
-	public void applewatch(int userNo) throws Exception {
+	public void applewatch() throws Exception {
 
 		int input = 0;
 		String productModel = null;
@@ -736,7 +731,7 @@ public class MainView {
 
 			Product product = new Product(productModel, productMemory, productCorlor);
 
-			int result = service.cartIn(product, userNo);
+			int result = service.cartIn(product);
 
 			System.out.println();
 			if (result > 0) {
@@ -798,7 +793,7 @@ public class MainView {
 
 	}
 
-	public void airpods(int userNo) throws Exception {
+	public void airpods() throws Exception {
 
 		int input = 0;
 		String productModel = null;
@@ -859,9 +854,8 @@ public class MainView {
 						System.out.println("\n<<입력하신 상품을 취소했습니다>>\n");
 					}
 
-					System.out.println("1. 쇼핑 계속하기");
+					System.out.println("1. 상품리스트");
 					System.out.println("2. 장바구니");
-					System.out.println("0. 메인화면");
 
 					System.out.println();
 
@@ -878,9 +872,6 @@ public class MainView {
 							System.out.println();
 							cartView.cartMenu();
 							break;
-						case 0:
-							System.out.println("\n<<메인화면으로 돌아갑니다.>>\n");
-							return;
 						default:
 							System.out.println("잘못 입력하셨습니다.");
 
@@ -955,9 +946,8 @@ public class MainView {
 						System.out.println("\n<<입력하신 상품을 취소했습니다>>\n");
 					}
 
-					System.out.println("1. 쇼핑 계속하기");
+					System.out.println("1. 상품리스트");
 					System.out.println("2. 장바구니");
-					System.out.println("0. 메인화면");
 
 					System.out.println();
 
@@ -974,9 +964,6 @@ public class MainView {
 							System.out.println();
 							cartView.cartMenu();
 							break;
-						case 0:
-							System.out.println("\n<<메인화면으로 돌아갑니다.>>\n");
-							return;
 						default:
 							System.out.println("잘못 입력하셨습니다.");
 

@@ -71,7 +71,7 @@ public class UserView {
 
 					switch (input) {
 					case 1:
-						mainView.productList(insertUser);
+						mainView.productList();
 						break;
 					case 2:
 						cartView.cartMenu();
@@ -80,7 +80,7 @@ public class UserView {
 //								viewShipping(insertUser);
 						break;
 					case 4:
-						mypage.myPage();
+						mypage.myPage(insertUser);
 						break;
 					case 0:
 						System.out.println("프로그램 종료");

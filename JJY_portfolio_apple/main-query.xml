@@ -28,7 +28,15 @@
 								FROM PRODUCT P
 								WHERE C.PRODUCT_MODEL = P.PRODUCT_MODEL
 								AND C.PRODUCT_MEMORY = P.PRODUCT_MEMORY)
-	</entry>					
+	</entry>				
+	
+	<!-- 장바구니에 담긴 상품 사용자에 업데이트  -->
+	<entry key = "updateCart">
+		UPDATE "USER" U
+		SET U.CART = (SELECT COUNT(USER_NO)
+				FROM CART C
+				WHERE U.USER_NO = C.USER_NO)
+	</entry>	
 			
 	<!-- 장바구니 가격 업데이트2 -->
 	<entry key="cartPrice2">
