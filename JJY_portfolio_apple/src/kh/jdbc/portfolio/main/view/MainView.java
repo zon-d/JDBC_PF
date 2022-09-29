@@ -604,8 +604,10 @@ public class MainView {
 
 					if (input == 1) {
 						productMemory = "41mm";
+						break;
 					} else if (input == 2) {
 						productMemory = "45mm";
+						break;
 					} else {
 						System.out.println("<<메뉴에 있는 번호만 입력해주세요.>>");
 					}
@@ -624,12 +626,16 @@ public class MainView {
 
 					if (input == 1) {
 						productCorlor = "미드나이트";
+						break;
 					} else if (input == 2) {
 						productCorlor = "스타라이트";
+						break;
 					} else if (input == 3) {
 						productCorlor = "실버";
+						break;
 					} else if (input == 4) {
 						productCorlor = "골드";
+						break;
 					} else {
 						System.out.println("<<메뉴에 있는 번호만 입력해주세요.>>");
 					}

@@ -20,6 +20,15 @@
 	<entry key = "deleteOrder">
 		DELETE FROM "ORDER"
 		WHERE ORDER_NO = ?
+		AND USER_NO = ?
+		AND ORDER_DT BETWEEN SYSDATE-3 AND SYSDATE
+	</entry>
+	
+	<!-- 주문내역 전체 삭제 -->
+	<entry key="deleteOrderList">
+		DELETE FROM "ORDER"
+		WHERE USER_NO = ?
+		AND ORDER_DT BETWEEN SYSDATE-3 AND SYSDATE
 	</entry>
 	
 </properties>

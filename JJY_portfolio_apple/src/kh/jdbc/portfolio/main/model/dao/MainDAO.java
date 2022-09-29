@@ -83,9 +83,11 @@ public class MainDAO {
 
 				String price = prop.getProperty("cartPrice2");
 
-				stmt = conn.createStatement();
+				pstmt = conn.prepareStatement(price);
+				pstmt.setString(1, product.getProductModel());
 
-				rs = stmt.executeQuery(price);
+				rs = pstmt.executeQuery();
+
 			} finally {
 				close(rs);
 				close(stmt);

@@ -95,6 +95,7 @@ public class OrderDAO {
 
 	/**
 	 * 주문금액 합계
+	 * 
 	 * @param conn
 	 * @return
 	 * @throws Exception
@@ -126,10 +127,11 @@ public class OrderDAO {
 
 	/**
 	 * 주문 내역 삭제
+	 * 
 	 * @param conn
 	 * @param orderNo
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public int updateComment(Connection conn, int orderNo) throws Exception {
 		int result = 0;
@@ -140,11 +142,38 @@ public class OrderDAO {
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, orderNo);
+			pstmt.setInt(2, UserView.insertUser.getUserNo());
 
 			result = pstmt.executeUpdate();
 
 		} finally {
 			close(pstmt);
+		}
+
+		return result;
+	}
+
+	/**
+	 * 주문내역 전체 삭제
+	 * 
+	 * @param conn
+	 * @return
+	 */
+	public int deleteOrderList(Connection conn) throws Exception {
+		int result = 0;
+
+		try {
+			String sql = prop.getProperty("deleteOrderList");
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, UserView.insertUser.getUserNo());
+
+			result = pstmt.executeUpdate();
+
+		} finally {
+			close(pstmt);
+
 		}
 
 		return result;

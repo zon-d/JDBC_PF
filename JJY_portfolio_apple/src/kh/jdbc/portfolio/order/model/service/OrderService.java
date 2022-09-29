@@ -49,10 +49,30 @@ public class OrderService {
 	 * @throws Exception
 	 */
 	public int deleteOrder(int orderNo) throws Exception {
-		
+
 		Connection conn = getConnection();
 
 		int result = odao.updateComment(conn, orderNo);
+
+		if (result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+
+		close(conn);
+
+		return result;
+	}
+
+	/**
+	 * 주문내역 전체 삭제
+	 * 
+	 * @return
+	 */
+	public int deleteOrderList() throws Exception {
+		Connection conn = getConnection();
+
+		int result = odao.deleteOrderList(conn);
 
 		if (result > 0)
 			commit(conn);

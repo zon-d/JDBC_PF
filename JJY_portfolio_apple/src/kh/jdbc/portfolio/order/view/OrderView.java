@@ -107,7 +107,7 @@ public class OrderView {
 					cancleOrder(orderList);
 					break;
 				case 2:
-//					deleteCartList(orderList);
+					deleteOrderList(orderList);
 					break;
 				case 0:
 					return;
@@ -122,36 +122,41 @@ public class OrderView {
 
 	}
 
-//	private void deleteCartList(List<Order> orderList) {
-//		try {
-//
-//			if (orderList.isEmpty()) {
-//				System.out.println("주문내역이 없습니다.");
-//			} else {
-//
-//				System.out.println("주문을 취소 하시겠습니까?(Y/N) : ");
-//				char ch = sc.next().toUpperCase().charAt(0);
-//
-//				if (ch == 'Y') {
-//					int result = oService.deleteCartList();
-//
-//					if (result > 0) {
-//						System.out.println("\n[주문 취소 성공]\n");
-//					} else {
-//						System.out.println("\n[상품 삭제 실패...]\n");
-//					}
-//
-//				} else {
-//					System.out.println("\n[삭제를 취소합니다.]\n");
-//				}
-//			}
-//
-//		} catch (Exception e) {
-//			System.out.println("\n<<장바구니 삭제 중 예외 발생>>\n");
-//			e.printStackTrace();
-//		}
-//
-//	}
+	/**
+	 * 주문내역 전체 취소
+	 * 
+	 * @param orderList
+	 */
+	private void deleteOrderList(List<Order> orderList) {
+		try {
+
+			if (orderList.isEmpty()) {
+				System.out.println("주문내역이 없습니다.");
+			} else {
+
+				System.out.print("주문을 취소 하시겠습니까?(Y/N) : ");
+				char ch = sc.next().toUpperCase().charAt(0);
+
+				if (ch == 'Y') {
+					int result = oService.deleteOrderList();
+
+					if (result > 0) {
+						System.out.println("\n[주문 취소 성공]\n");
+					} else {
+						System.out.println("\n[주문 취소 실패...]\n");
+					}
+
+				} else {
+					System.out.println("\n[주문 취소를 취소합니다.]\n");
+				}
+			}
+
+		} catch (Exception e) {
+			System.out.println("\n<<주문 취소 중 예외 발생>>\n");
+			e.printStackTrace();
+		}
+
+	}
 
 	/**
 	 * 주문취소
@@ -159,7 +164,7 @@ public class OrderView {
 	private void cancleOrder(List<Order> orderList) {
 
 		try {
-			System.out.println("취소할 주문 번호 입력 : ");
+			System.out.print("취소할 주문 번호 입력 : ");
 			int orderNo = sc.nextInt();
 
 			boolean flag = true;
@@ -175,7 +180,7 @@ public class OrderView {
 						if (result > 0) {
 							System.out.println("\n[주문 취소 성공]\n");
 						} else {
-							System.out.println("\n[주문 취소 실패]\n");
+							System.out.println("\n[결제일 3일 이내의 주문내역만 취소 가능합니다.]\n");
 						}
 					}
 					if (flag) {
